@@ -1,0 +1,65 @@
+﻿using MediatR;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using RSAllies.Shared.Notifications;
+using RSAllies.SMS.Contracts.Requests;
+using RSAllies.SMS.Data;
+using RSAllies.SMS.Queries;
+using RSAllies.SMS.Services;
+
+namespace RSAllies.SMS.Features
+{
+    internal class BookingHandler(SmsDbContext context, MessageService messageService) : INotificationHandler<BookingNotification>
+    {
+        public async Task Handle(BookingNotification notification, CancellationToken cancellationToken)
+        {
+            var user = await GetUserDetailsAsync(notification.UserId);
+            var venue = await GetVenueDetailsAsync(notification.SessionId);
+
+            var message = $"Dear {user.Name}, your booking for the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
+                          $"on {venue.Date:dd/MM/yyyy} from {venue.StartTime:HH:mm} to {venue.EndTime:HH:mm} has been booked. " +
+                          $"For any inquiries, please contact 0679844679 or support@roadsafetyallies.me .";
+
+            // Send SMS
+
+            var sms = new Sms
+            {
+                SourceAddress = "RSAllies",
+                ScheduleTime = string.Empty,
+                Encoding = "0",
+                Message = message,
+                Recipients = new List<Recipient>
+                {
+                    new Recipient { RecipientId = 1, DestinationAddress = user.Phone}
+                }
+            };
+
+            await messageService.SendMessage(sms);
+        }
+
+
+        public async Task<User> GetUserDetailsAsync(Guid userId)
+        {
+            var query = $"SELECT CONCAT(u.FirstName, ' ', u.MiddleName, ' ', u.LastName) AS Name, a.Phone AS Phone " +
+                        $"FROM Users.Users u JOIN Users.Accounts a ON u.Id = @UserId";
+            var userIdParameter = new SqlParameter("@UserId", userId);
+
+            var user = await context.Set<User>().FromSqlRaw(query, userIdParameter).FirstOrDefaultAsync();
+            return user!;
+        }
+
+        public async Task<Venue> GetVenueDetailsAsync(Guid sessionId)
+        {
+            var query = $"SELECT v.Name AS VenueName, v.Address AS VenueAddress, d.Name AS District, r.Name AS Region, " +
+                        $"s.Date AS Date,s.StartTime AS StartTime, s.EndTime AS EndTime " +
+                        $"FROM Venues.Sessions s JOIN Venues.Venues v ON s.VenueId = v.Id " +
+                        $"JOIN Venues.Districts d ON v.DistrictId = d.Id " +
+                        $"JOIN Venues.Regions r ON v.RegionId = r.Id " +
+                        $"WHERE s.SessionId = @SessionId";
+            var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
+
+            var venue = await context.Set<Venue>().FromSqlRaw(query, sessionIdParameter).FirstOrDefaultAsync();
+            return venue!;
+        }
+    }
+}
