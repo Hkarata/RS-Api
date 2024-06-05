@@ -21,6 +21,7 @@ namespace RSAllies.SMS.Features
                           $"For any inquiries, please contact 0679844679 or support@roadsafetyallies.me .";
 
             // Send SMS
+            var phone = 255 + user.Phone.TrimStart('0');
 
             var sms = new Sms
             {
@@ -30,7 +31,7 @@ namespace RSAllies.SMS.Features
                 Message = message,
                 Recipients = new List<Recipient>
                 {
-                    new Recipient { RecipientId = 1, DestinationAddress = user.Phone}
+                    new Recipient { RecipientId = 1, DestinationAddress = phone}
                 }
             };
 

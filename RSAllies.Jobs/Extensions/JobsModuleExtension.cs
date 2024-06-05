@@ -49,7 +49,7 @@ namespace RSAllies.Jobs.Extensions
             {
                 var smtpClient = new SmtpClient();
                 smtpClient.Connect("mail.privateemail.com", 465, true);
-                smtpClient.Authenticate("support@roadsafetyallies.me", "Hmkmkombe2.");
+                smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
 
                 return smtpClient;
             });

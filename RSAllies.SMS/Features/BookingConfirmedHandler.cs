@@ -22,6 +22,8 @@ namespace RSAllies.SMS.Features
 
 
             // Send SMS
+            var phone = 255 + user.Phone.TrimStart('0');
+
             var sms = new Sms
             {
                 SourceAddress = "RSAllies",
@@ -30,7 +32,7 @@ namespace RSAllies.SMS.Features
                 Message = message,
                 Recipients = new List<Recipient>
                 {
-                    new Recipient { RecipientId = 1, DestinationAddress = user.Phone}
+                    new Recipient { RecipientId = 1, DestinationAddress = phone}
                 }
             };
 
