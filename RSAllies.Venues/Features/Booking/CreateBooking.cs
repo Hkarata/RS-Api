@@ -65,7 +65,7 @@ public class CreateBookingEndPoint(ILogger<CreateBookingEndPoint> logger) : ICar
                 logger.LogBookingCreated(booking);
             }
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .Produces<Result>()
             .WithTags("Booking");

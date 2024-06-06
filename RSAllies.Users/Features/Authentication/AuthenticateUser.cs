@@ -66,7 +66,7 @@ public class AuthenticateUserEndPoint(ILogger<AuthenticateUserEndPoint> logger) 
                     logger.LogUserAuthenticationFailed(user);
                 }
 
-                return Results.Ok(result);
+                return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
             })
             .Produces<Result<UserDto>>()
             .WithTags("Authentication");

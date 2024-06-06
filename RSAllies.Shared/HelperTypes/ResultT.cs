@@ -1,9 +1,12 @@
-﻿namespace RSAllies.Shared.HelperTypes;
+﻿using Newtonsoft.Json;
+
+namespace RSAllies.Shared.HelperTypes;
 
 public class Result<TValue> : Result
 {
     private readonly TValue? _value;
 
+    [JsonConstructor]
     protected internal Result(TValue? value, bool isSuccess, Error error)
         : base(isSuccess, error) =>
         _value = value;

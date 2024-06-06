@@ -71,7 +71,7 @@ public class CreateQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : IC
 
             logger.LogQuestionCreated(question);
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
         })
             .Produces<Result>()

@@ -74,7 +74,7 @@ public class CreateSessionsEndPoint : ICarterModule
 
             var result = await sender.Send(request);
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
         })
             .Produces<Result>()

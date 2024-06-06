@@ -76,7 +76,7 @@ public class CreateVenueEndPoint(ILogger<CreateVenueEndPoint> logger) : ICarterM
                 logger.LogVenueCreated(venue);
             }
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .Produces<Result>()
             .WithTags("Venue");

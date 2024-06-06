@@ -71,7 +71,7 @@ public class CreateSessionEndPoint(ILogger<CreateSessionEndPoint> logger) : ICar
                 logger.LogSessionCreated(session);
             }
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
         })
             .Produces<Result>()

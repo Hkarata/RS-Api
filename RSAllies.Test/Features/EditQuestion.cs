@@ -73,7 +73,7 @@ public class EditQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : ICar
 
             logger.LogQuestionEdited(question);
 
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
         })
             .Produces<Result>()

@@ -53,7 +53,7 @@ public class DeleteSessionEndPoint : ICarterModule
         {
             var request = new DeleteSession.Command { SessionId = sessionId };
             var result = await sender.Send(request);
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .Produces<Result>()
             .WithTags("Session");

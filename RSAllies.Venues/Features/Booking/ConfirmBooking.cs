@@ -56,7 +56,7 @@ public class ConfirmBookingEndPoint : ICarterModule
         {
             var request = new ConfirmBooking.Command { BookingId = bookingId };
             var result = await sender.Send(request);
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .WithTags("Booking")
             .Produces<Result>();

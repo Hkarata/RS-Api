@@ -60,7 +60,7 @@ public class GetSessionEndPoint : ICarterModule
         {
             var request = new GetSession.Query { Id = id };
             var result = await sender.Send(request);
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .Produces<Result<SessionDto>>()
             .WithTags("Session");

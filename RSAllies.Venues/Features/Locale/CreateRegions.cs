@@ -15,10 +15,10 @@ namespace RSAllies.Venues.Features.Locale
     {
         internal class Command : IRequest<Result>
         {
-            public List<data> Data { get; set; } = new();
+            public List<Data> Data { get; set; } = new();
         }
 
-        public class data
+        public class Data
         {
             public Guid Id { get; set; }
             public string Name { get; set; } = string.Empty;
@@ -46,10 +46,12 @@ public class CreateRegionsEndPoint : ICarterModule
     {
         app.MapPost("/api/regions", async (List<CreateRegionDto> regions, ISender sender) =>
         {
-            var list = regions.Select(r => new CreateRegions.data { Id = r.Id, Name = r.region }).ToList();
+            var list = regions.Select(r => new CreateRegions.Data { Id = r.Id, Name = r.region }).ToList();
             var request = new CreateRegions.Command { Data = list };
             var result = await sender.Send(request);
-            return Results.Ok(result);
-        });
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
+        })
+            .Produces<Result>()
+            .WithTags("Locale"); ;
     }
 }

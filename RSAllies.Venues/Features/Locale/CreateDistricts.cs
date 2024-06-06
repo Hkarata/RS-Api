@@ -15,7 +15,7 @@ internal abstract class CreateDistricts
 
     internal class Command : IRequest<Result>
     {
-        public List<Data>? Datas { get; set; }
+        public List<Data>? Data { get; set; }
     }
 
     internal class Data
@@ -28,7 +28,7 @@ internal abstract class CreateDistricts
     {
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            var districts = request.Datas?.Select(d => new District
+            var districts = request.Data?.Select(d => new District
             {
                 Id = Guid.NewGuid(),
                 Name = d.Name,
@@ -58,9 +58,11 @@ public class CreateDistrictsEndPoint : ICarterModule
                 Name = d.District
             }).ToList();
 
-            var request = new CreateDistricts.Command { Datas = list };
+            var request = new CreateDistricts.Command { Data = list };
             var result = await sender.Send(request);
-            return Results.Ok(result);
-        });
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
+        })
+            .Produces<Result>()
+            .WithTags("Locale");
     }
 }

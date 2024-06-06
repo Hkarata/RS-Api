@@ -49,7 +49,7 @@ public class AccountCheckEndPoint : ICarterModule
         {
             var request = new AccountCheck.Query { PhoneNumber = account.PhoneNumber, Email = account.Email };
             var result = await sender.Send(request);
-            return Results.Ok(result);
+            return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
             .Produces<Result<AccountCheckResult>>()
             .WithTags("Checks");
