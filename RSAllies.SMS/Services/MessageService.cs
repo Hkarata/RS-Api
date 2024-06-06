@@ -28,7 +28,7 @@ public class MessageService(ILogger<MessageService> logger)
                 schedule_time = "",
                 encoding = 0,
                 message = sms.message,
-                recipients = sms.recipients?.Select((r, i) => new { recipient_id = i + 1, dest_addr = r }).ToArray()
+                recipients = sms.recipients
             };
 
 

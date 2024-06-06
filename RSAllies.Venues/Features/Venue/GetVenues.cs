@@ -31,6 +31,7 @@ namespace RSAllies.Venues.Features.Venue
                         Id = v.Id,
                         Name = v.Name,
                         Address = v.Address,
+                        ImageUrl = v.ImageUrl,
                         District = v.District!.Name,
                         Region = v.Region!.Name,
                         Capacity = v.Capacity

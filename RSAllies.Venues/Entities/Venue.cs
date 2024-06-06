@@ -14,6 +14,7 @@ namespace RSAllies.Venues.Entities
 
         [MaxLength(50)]
         public string Address { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public int Capacity { get; set; }
         public List<Session>? Sessions { get; set; }
 

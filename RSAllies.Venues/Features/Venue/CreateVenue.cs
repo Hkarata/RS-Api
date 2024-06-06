@@ -19,6 +19,7 @@ namespace RSAllies.Venues.Features.Venue
         {
             public string Name { get; set; } = string.Empty;
             public string Address { get; set; } = string.Empty;
+            public string ImageUrl { get; set; } = string.Empty;
             public int Capacity { get; set; }
             public Guid DistrictId { get; set; }
             public Guid RegionId { get; set; }
@@ -38,6 +39,7 @@ namespace RSAllies.Venues.Features.Venue
                 {
                     Name = request.Name,
                     Address = request.Address,
+                    ImageUrl = request.ImageUrl,
                     Capacity = request.Capacity,
                     DistrictId = request.DistrictId,
                     RegionId = request.RegionId,
@@ -64,6 +66,7 @@ public class CreateVenueEndPoint(ILogger<CreateVenueEndPoint> logger) : ICarterM
             {
                 Name = venue.Name,
                 Address = venue.Address,
+                ImageUrl = venue.ImageUrl,
                 Capacity = venue.Capacity,
                 DistrictId = venue.DistrictId,
                 RegionId = venue.RegionId,
