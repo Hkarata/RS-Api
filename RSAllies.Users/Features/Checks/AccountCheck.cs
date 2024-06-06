@@ -24,13 +24,11 @@ namespace RSAllies.Users.Features.Checks
         {
             public async Task<Result<AccountCheckResult>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var phoneNumberTask = context.Accounts.AnyAsync(a => a.Phone == request.PhoneNumber, cancellationToken);
-                var emailTask = context.Accounts.AnyAsync(a => a.Email == request.Email, cancellationToken);
+                var phoneNumberExists = await context.Accounts
+                    .AnyAsync(a => a.Phone == request.PhoneNumber, cancellationToken);
 
-                await Task.WhenAll(phoneNumberTask, emailTask);
-
-                var phoneNumberExists = phoneNumberTask.Result;
-                var emailExists = emailTask.Result;
+                var emailExists = await context.Accounts
+                    .AnyAsync(a => a.Email == request.Email, cancellationToken);
 
                 var result = new AccountCheckResult { EmailExists = emailExists, PhoneNumberExists = phoneNumberExists };
 

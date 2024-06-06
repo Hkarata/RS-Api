@@ -34,7 +34,7 @@ public class NIDACheckEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/checks/check-nida", async (string nida, ISender sender) =>
+        app.MapGet("/api/checks/check-nida/{nida}", async (string nida, ISender sender) =>
         {
             var request = new NIDACheck.Query
             {

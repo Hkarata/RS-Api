@@ -6,9 +6,9 @@ namespace RSAllies.SMS.Contracts.Requests;
 public record Recipient
 {
     [JsonProperty("recipient_id")]
-    public int RecipientId { get; set; }
+    public string recipient_id { get; set; } = string.Empty;
 
     [JsonProperty("dest_addr")]
     [PersonalIdentifiableInformation]
-    public string DestinationAddress { get; set; } = string.Empty;
+    public string dest_addr { get; set; } = string.Empty;
 }

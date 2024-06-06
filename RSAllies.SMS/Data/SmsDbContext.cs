@@ -2,7 +2,7 @@
 
 namespace RSAllies.SMS.Data
 {
-    internal class SmsDbContext : DbContext
+    public class SmsDbContext : DbContext
     {
         public SmsDbContext(DbContextOptions<SmsDbContext> options) : base(options)
         {

@@ -12,7 +12,7 @@ namespace RSAllies.Users.Features.User;
 
 internal abstract class CreateUser
 {
-    internal class Command : IRequest<Result>
+    internal class Command : IRequest<Result<Guid>>
     {
         public string FirstName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
@@ -26,9 +26,9 @@ internal abstract class CreateUser
         public Guid LicenseClassId { get; set; }
     }
 
-    internal sealed class Handler(UsersDbContext context) : IRequestHandler<Command, Result>
+    internal sealed class Handler(UsersDbContext context) : IRequestHandler<Command, Result<Guid>>
     {
-        public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
         {
             var user = new Entities.User
             {
@@ -40,7 +40,7 @@ internal abstract class CreateUser
                 Age = DateTime.Today.Year - request.DateOfBirth.Year,
                 Address = request.Address,
                 Identification = request.Identification,
-                IsForeigner = request.IsForeigner,
+                IsForeigner = !request.IsForeigner,
                 GenderId = request.GenderId,
                 LicenseClassId = request.LicenseClassId,
                 EducationLevelId = request.EducationLevelId,
@@ -50,7 +50,7 @@ internal abstract class CreateUser
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return user.Id;
         }
     }
 }
@@ -68,7 +68,7 @@ public class CreateUserEndPoint : ICarterModule
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
-            .Produces<Result>()
+            .Produces<Result<Guid>>()
             .WithTags("User");
     }
 }

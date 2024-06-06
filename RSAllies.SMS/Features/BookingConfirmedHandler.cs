@@ -26,13 +26,13 @@ namespace RSAllies.SMS.Features
 
             var sms = new Sms
             {
-                SourceAddress = "RSAllies",
-                ScheduleTime = string.Empty,
-                Encoding = "0",
-                Message = message,
-                Recipients = new List<Recipient>
+                source_addr = "RSAllies",
+                schedule_time = string.Empty,
+                encoding = "0",
+                message = message,
+                recipients = new List<Recipient>
                 {
-                    new Recipient { RecipientId = 1, DestinationAddress = phone}
+                    new Recipient { recipient_id = "1", dest_addr = phone}
                 }
             };
 
@@ -46,7 +46,10 @@ namespace RSAllies.SMS.Features
                         $"FROM Users.Users u JOIN Users.Accounts a ON u.Id = @UserId";
             var userIdParameter = new SqlParameter("@UserId", userId);
 
-            var user = await context.Set<User>().FromSqlRaw(query, userIdParameter).FirstOrDefaultAsync();
+            var user = await context.Database
+                .SqlQueryRaw<User>(query, userIdParameter)
+                .FirstOrDefaultAsync();
+
             return user!;
         }
 
@@ -60,7 +63,10 @@ namespace RSAllies.SMS.Features
                         $"WHERE s.SessionId = @SessionId";
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            var venue = await context.Set<Venue>().FromSqlRaw(query, sessionIdParameter).FirstOrDefaultAsync();
+            var venue = await context.Database
+                .SqlQueryRaw<Venue>(query, sessionIdParameter)
+                .FirstOrDefaultAsync();
+
             return venue!;
         }
     }

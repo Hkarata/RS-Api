@@ -15,8 +15,9 @@ namespace RSAllies.Jobs.Services
 
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            List<string> userIds = await context.Set<string>()
-                .FromSqlRaw(firstQuery, sessionIdParameter).ToListAsync();
+            List<string> userIds = await context.Database
+                .SqlQueryRaw<string>(firstQuery, sessionIdParameter)
+                .ToListAsync();
 
             var users = userIds;
 
@@ -34,8 +35,8 @@ namespace RSAllies.Jobs.Services
 
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            var details = await context.Set<Venue>()
-                .FromSqlRaw(secondQuery, sessionIdParameter)
+            var details = await context.Database
+                .SqlQueryRaw<Venue>(secondQuery, sessionIdParameter)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return details!;
@@ -55,8 +56,8 @@ namespace RSAllies.Jobs.Services
 
                 var userIdParameter = new SqlParameter("@UserId", UserId);
 
-                var user = await context.Set<User>()
-                    .FromSqlRaw(thirdQuery, userIdParameter)
+                var user = await context.Database
+                    .SqlQueryRaw<User>(thirdQuery, userIdParameter)
                     .FirstOrDefaultAsync(cancellationToken);
 
                 users.Add(user!);

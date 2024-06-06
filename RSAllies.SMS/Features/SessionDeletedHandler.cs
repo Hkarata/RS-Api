@@ -24,18 +24,18 @@ namespace RSAllies.SMS.Features
 
             var sms = new Sms
             {
-                SourceAddress = "RSAllies",
-                ScheduleTime = string.Empty,
-                Encoding = "0",
-                Message = message,
-                Recipients = new List<Recipient>()
+                source_addr = "RSAllies",
+                schedule_time = string.Empty,
+                encoding = "0",
+                message = message,
+                recipients = new List<Recipient>()
             };
 
             int i = 1;
 
             foreach (var phoneNumber in phoneNumbers)
             {
-                sms.Recipients.Add(new Recipient { RecipientId = i, DestinationAddress = phoneNumber });
+                sms.recipients.Add(new Recipient { recipient_id = $"{i}", dest_addr = phoneNumber });
                 i++;
             }
 
@@ -50,8 +50,9 @@ namespace RSAllies.SMS.Features
 
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            List<string> userIds = await context.Set<string>()
-                .FromSqlRaw(firstQuery, sessionIdParameter).ToListAsync();
+            List<string> userIds = await context.Database
+                .SqlQueryRaw<string>(firstQuery, sessionIdParameter)
+                .ToListAsync();
 
             var users = userIds;
 
@@ -94,7 +95,10 @@ namespace RSAllies.SMS.Features
                         $"WHERE s.SessionId = @SessionId";
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            var venue = await context.Set<Venue>().FromSqlRaw(query, sessionIdParameter).FirstOrDefaultAsync();
+            var venue = await context.Database
+                .SqlQueryRaw<Venue>(query, sessionIdParameter)
+                .FirstOrDefaultAsync();
+
             return venue!;
         }
     }

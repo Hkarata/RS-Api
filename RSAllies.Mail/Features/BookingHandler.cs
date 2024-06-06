@@ -40,7 +40,10 @@ namespace RSAllies.Mail.Features
                         $"FROM Users.Users u JOIN Users.Accounts a ON u.Id = @UserId";
             var userIdParameter = new SqlParameter("@UserId", userId);
 
-            var user = await context.Set<User>().FromSqlRaw(query, userIdParameter).FirstOrDefaultAsync();
+            var user = await context.Database
+                .SqlQueryRaw<User>(query, userIdParameter)
+                .FirstOrDefaultAsync();
+
             return user!;
         }
 
@@ -54,7 +57,10 @@ namespace RSAllies.Mail.Features
                         $"WHERE s.Id = @SessionId";
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
-            var venue = await context.Set<Venue>().FromSqlRaw(query, sessionIdParameter).FirstOrDefaultAsync();
+            var venue = await context.Database
+                .SqlQueryRaw<Venue>(query, sessionIdParameter)
+                .FirstOrDefaultAsync();
+
             return venue!;
         }
     }

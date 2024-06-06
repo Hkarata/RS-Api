@@ -25,14 +25,7 @@ public static class SmSModuleExtension
 
         mediatRAssemblies.Add(typeof(SmSModuleExtension).Assembly);
 
-        services.AddHttpClient<MessageService>(client =>
-        {
-            const string apiKey = "23ff38b59d83ee03";
-            const string secretKey = "OWZkMDcyN2Y1NmFlNzU1OTFkNDhjZjJhNzhiMzE0OTZhMDljNGNkZDZkZGE2NmI1NjYwMjE0NTZmOGVmZWNiNg==";
-            client.DefaultRequestHeaders.Add("api_key", apiKey);
-            client.DefaultRequestHeaders.Add("secret_key", secretKey);
-            client.BaseAddress = new Uri("https://apisms.beem.africa");
-        });
+        services.AddSingleton<MessageService>();
 
         services.AddHttpClient<OtpService>(client =>
         {

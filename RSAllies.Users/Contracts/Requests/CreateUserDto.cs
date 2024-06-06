@@ -2,7 +2,7 @@
 
 namespace RSAllies.Users.Contracts.Requests;
 
-public abstract record CreateUserDto
+public record CreateUserDto
 {
     public string FirstName { get; set; } = string.Empty;
 
