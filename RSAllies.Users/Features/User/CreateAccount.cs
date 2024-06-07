@@ -58,6 +58,8 @@ public class CreateAccountEndPoint : ICarterModule
             var request = account.Adapt<CreateAccount.Command>();
             var result = await sender.Send(request);
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
-        });
+        })
+            .Produces<Result>()
+            .WithTags("User");
     }
 }

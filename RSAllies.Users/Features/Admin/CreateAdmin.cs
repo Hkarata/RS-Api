@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using RSAllies.Shared.HelperTypes;
+using RSAllies.Shared.Notifications;
 using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Data;
 using RSAllies.Users.Entities;
@@ -25,7 +26,7 @@ namespace RSAllies.Users.Features.Admin
             public Guid RoleId { get; set; }
         }
 
-        internal sealed class Handler(UsersDbContext context) : IRequestHandler<Command, Result>
+        internal sealed class Handler(UsersDbContext context, IMediator mediator) : IRequestHandler<Command, Result>
         {
             public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
             {
@@ -54,6 +55,8 @@ namespace RSAllies.Users.Features.Admin
 
                 await context.SaveChangesAsync(cancellationToken);
 
+                await mediator.Publish(new AdminCreated(admin.Username, admin.Password, admin.Phone, admin.Email), cancellationToken);
+
                 return Result.Success();
             }
         }
@@ -81,6 +84,8 @@ public class CreateAdminEndPoint : ICarterModule
 
             return result.IsSuccess ? Results.Ok(result) : Results.Ok(result.Error);
 
-        });
+        })
+            .Produces<Result>()
+            .WithTags("Admin");
     }
 }
