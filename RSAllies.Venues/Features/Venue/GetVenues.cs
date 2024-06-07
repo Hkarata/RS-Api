@@ -60,7 +60,7 @@ public class GetVenuesEndPoint : ICarterModule
             var result = await sender.Send(request);
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
-            .Produces<Result<List<ASessionDto>>>()
+            .Produces<Result<List<SVenueDto>>>()
             .WithTags("Venues");
     }
 }
