@@ -51,7 +51,7 @@ public class AuthenticateEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/admin", async (AdminLogin admin, ISender sender) =>
+        app.MapPost("/api/admin/authenticate", async (AdminLogin admin, ISender sender) =>
         {
             var request = new Authenticate.Command
             {
