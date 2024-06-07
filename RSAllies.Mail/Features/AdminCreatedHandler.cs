@@ -1,13 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MediatR;
 using MimeKit;
-using RSAllies.Mail.Queries;
 using RSAllies.Shared.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.Mail.Features
 {

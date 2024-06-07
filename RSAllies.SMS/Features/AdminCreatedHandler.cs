@@ -2,11 +2,6 @@
 using RSAllies.Shared.Notifications;
 using RSAllies.SMS.Contracts.Requests;
 using RSAllies.SMS.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.SMS.Features
 {
