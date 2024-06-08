@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RSAllies.Shared.HelperTypes;
 using RSAllies.Shared.Notifications;
@@ -28,7 +29,16 @@ namespace RSAllies.Venues.Features.Session
         {
             public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
             {
-                var session = new Entities.Session
+                var exist = await context.Sessions
+                    .AnyAsync(s => s.Date == request.Date && s.StartTime == request.StartTime, cancellationToken);
+
+                if (exist)
+                {
+                    return Result.Failure(new Error("CreateSession.Exists",
+                        "A session already exists for the given date and start time"));
+                }
+
+                    var session = new Entities.Session
                 {
                     Id = Guid.NewGuid(),
                     Date = request.Date,
