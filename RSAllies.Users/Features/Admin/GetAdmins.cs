@@ -64,7 +64,7 @@ public class GetAdminsEndPoint : ICarterModule
             var request = new GetAdmins.Query();
             var result = await sender.Send(request);
 
-            return result.IsSuccess ? Results.Ok(result.Value) : Results.Ok(result.Error);
+            return result.IsSuccess ? Results.Ok(result) : Results.Ok(result.Error);
         })
             .Produces<Result<List<Admin>>>()
             .WithTags("Admin");
