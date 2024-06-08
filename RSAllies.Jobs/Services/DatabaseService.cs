@@ -26,7 +26,7 @@ namespace RSAllies.Jobs.Services
 
         public async Task<Venue> GetVenueDetails(Guid sessionId, CancellationToken cancellationToken)
         {
-            string secondQuery = $"SELECT s.Date AS Date, s.Capacity AS Count, v.Name AS VenueName, v.Address AS VenueAddress, d.Name AS District, r.Name AS Region " +
+            string secondQuery = $"SELECT s.Date AS Date, s.Capacity AS Capacity, v.Name AS VenueName, v.Address AS VenueAddress, d.Name AS District, r.Name AS Region " +
                                  $"FROM Venues.Sessions s " +
                                  $"JOIN Venues.Venues v ON s.VenueId = v.Id " +
                                  $"JOIN Venues.Districts d ON v.DistrictId = d.Id " +
