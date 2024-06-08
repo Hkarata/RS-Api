@@ -3,6 +3,8 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using RSAllies.Jobs.Queries;
 
+
+
 namespace RSAllies.Jobs.Services
 {
     internal static class DocumentService
@@ -13,6 +15,7 @@ namespace RSAllies.Jobs.Services
             var filename = $"{sessionId}.pdf";
             var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "PDFs", filename);
 
+            QuestPDF.Settings.License = LicenseType.Community;
 
             Document.Create(container =>
             {
