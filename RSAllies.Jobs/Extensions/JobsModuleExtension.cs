@@ -45,14 +45,14 @@ namespace RSAllies.Jobs.Extensions
 
             services.AddScoped<SessionJob>();
 
-            services.AddSingleton<SmtpClient>(options =>
-            {
-                var smtpClient = new SmtpClient();
-                smtpClient.Connect("mail.privateemail.com", 465, true);
-                smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
+            //services.AddSingleton<SmtpClient>(options =>
+            //{
+            //    var smtpClient = new SmtpClient();
+            //    smtpClient.Connect("mail.privateemail.com", 465, true);
+            //    smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
 
-                return smtpClient;
-            });
+            //    return smtpClient;
+            //});
 
             return services;
         }

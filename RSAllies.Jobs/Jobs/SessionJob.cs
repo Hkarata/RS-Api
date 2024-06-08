@@ -16,7 +16,7 @@ namespace RSAllies.Jobs.Jobs
             // Send email
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Support", "support@roadsafetyallies.me"));
+            message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
             message.To.Add(new MailboxAddress("Manager", venue.VenueAddress));
             message.Subject = "Session Attendance List";
             var body = new TextPart("plain")
