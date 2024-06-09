@@ -52,11 +52,13 @@ public class GetSessionUsersEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/sessions/{sessionId:guid}/users", async (Guid sessionId, ISender sender) =>
+        app.MapGet("/api/sessions/{sessionId:guid}/users", async (Guid sessionId, ISender sender) =>
         {
             var request = new GetSessionUsers.Query { SessionId = sessionId};
             var result = await sender.Send(request);
             return result.IsSuccess ? Results.Ok(result) : Results.Ok(result.Error);
-        });
+        })
+            .Produces<Result<List<UserData>>>()
+            .WithTags("Sessions");
     }
 }
