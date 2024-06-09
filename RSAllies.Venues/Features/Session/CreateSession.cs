@@ -38,7 +38,7 @@ namespace RSAllies.Venues.Features.Session
                         "A session already exists for the given date and start time"));
                 }
 
-                    var session = new Entities.Session
+                var session = new Entities.Session
                 {
                     Id = Guid.NewGuid(),
                     Date = request.Date,
