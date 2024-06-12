@@ -15,6 +15,16 @@ namespace RSAllies.Jobs.Services
             var filename = $"{sessionId}.pdf";
             var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "PDFs", filename);
 
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string pdfDirectory = Path.Combine(currentDirectory, "PDFs");
+
+            // Check if the directory exists
+            if (!Directory.Exists(pdfDirectory))
+            {
+                // Create the directory if it does not exist
+                Directory.CreateDirectory(pdfDirectory);
+            }
+
             QuestPDF.Settings.License = LicenseType.Community;
 
             Document.Create(container =>
