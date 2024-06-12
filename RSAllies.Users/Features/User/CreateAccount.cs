@@ -39,9 +39,16 @@ internal abstract class CreateAccount
 
             await context.SaveChangesAsync(cancellationToken);
 
-            if (!string.IsNullOrEmpty(request.Email))
+            try
             {
-                await mediator.Publish(new AccountMade(request.UserId, request.Email), cancellationToken);
+                if (!string.IsNullOrEmpty(request.Email))
+                {
+                    await mediator.Publish(new AccountMade(request.UserId, request.Email), cancellationToken);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return Result.Success();
