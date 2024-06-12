@@ -28,8 +28,4 @@
     <ProjectReference Include="..\RSAllies.Shared\RSAllies.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PDFs\" />
-  </ItemGroup>
-
 </Project>
