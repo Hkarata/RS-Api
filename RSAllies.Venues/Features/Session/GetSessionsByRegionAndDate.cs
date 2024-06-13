@@ -15,7 +15,7 @@ namespace RSAllies.Venues.Features.Session
     {
         internal class Query : IRequest<Result<List<ASessionDto>>>
         {
-            public string Region { get; set; } = string.Empty;
+            public Guid RegionId { get; set; } = string.Empty;
             public DateTime Date { get; set; }
         }
 
@@ -28,7 +28,7 @@ namespace RSAllies.Venues.Features.Session
                     .Where(s => !s.IsDeleted && s.Date >= request.Date)
                     .Include(s => s.Venue)
                     .ThenInclude(v => v!.Region)
-                    .Where(s => s.Venue!.Region!.Name == request.Region)
+                    .Where(s => s.Venue!.Region!.Id == request.RegionId)
                     .Select(s => new ASessionDto
                     {
                         Id = s.Id,
@@ -58,9 +58,9 @@ public class GetSessionsByRegionAndDateEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/sessions/{region}/{date:datetime}", async (DateTime date, string region, ISender sender) =>
+        app.MapGet("/api/sessions/{regionId:guid}/{date:datetime}", async (DateTime date, Guid regionId, ISender sender) =>
         {
-            var request = new GetSessionsByRegionAndDate.Query { Date = date, Region = region };
+            var request = new GetSessionsByRegionAndDate.Query { Date = date, RegionId = regionId };
             var result = await sender.Send(request);
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })
