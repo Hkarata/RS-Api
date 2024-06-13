@@ -36,6 +36,7 @@ namespace RSAllies.Venues.Features.Session
                         StartTime = s.StartTime,
                         EndTime = s.EndTime,
                         Capacity = s.Capacity,
+                        VenueCapacity = s.Venue!.Capacity,
                         VenueName = s.Venue!.Name,
                         VenueAddress = s.Venue.Address,
                         Region = s.Venue.Region!.Name
