@@ -141,7 +141,7 @@ namespace RSAllies.Jobs.Services
                         });
                 });
             })
-            .GeneratePdf(filename);
+            .GeneratePdf(pdfPath);
         }
     }
 }
