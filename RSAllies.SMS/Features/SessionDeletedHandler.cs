@@ -92,7 +92,7 @@ namespace RSAllies.SMS.Features
                         $"FROM Venues.Sessions s JOIN Venues.Venues v ON s.VenueId = v.Id " +
                         $"JOIN Venues.Districts d ON v.DistrictId = d.Id " +
                         $"JOIN Venues.Regions r ON v.RegionId = r.Id " +
-                        $"WHERE s.SessionId = @SessionId";
+                        $"WHERE s.Id = @SessionId";
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
             var venue = await context.Database
