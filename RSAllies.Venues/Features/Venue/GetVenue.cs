@@ -24,7 +24,7 @@ namespace RSAllies.Venues.Features.Venue
             {
                 var venue = await context.Venues
                     .AsNoTracking()
-                    .Where(v => v.Id == request.Id)
+                    .Where(v => v.Id == request.Id && !v.IsDeleted)
                     .Include(v => v.District)
                     .Include(v => v.Region)
                     .Include(v => v.Sessions)
