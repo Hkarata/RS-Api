@@ -21,14 +21,20 @@ namespace RSAllies.Venues.Features.Venue
         {
             public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
             {
-                var sessions = await context.Sessions
-                    .Where(s => s.VenueId == request.VenueId && !s.IsDeleted)
-                    .ToListAsync(cancellationToken);
+                var venue = await context.Venues
+                    .Where(venue => venue.Id == request.VenueId && !venue.IsDeleted)
+                    .SingleOrDefaultAsync(cancellationToken);
 
-                if (sessions.Count == 0)
+                if (venue is null)
                 {
                     return Result.Failure(new Error("DeleteVenue.NonExistent", "The specified venue does not exist"));
                 }
+
+                venue.IsDeleted = true;
+
+                var sessions = await context.Sessions
+                    .Where(s => s.VenueId == request.VenueId && !s.IsDeleted)
+                    .ToListAsync(cancellationToken);
 
                 sessions.ForEach(s => s.IsDeleted = true);
 
