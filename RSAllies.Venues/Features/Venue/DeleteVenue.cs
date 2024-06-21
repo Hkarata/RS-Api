@@ -36,7 +36,10 @@ namespace RSAllies.Venues.Features.Venue
                     .Where(s => s.VenueId == request.VenueId && !s.IsDeleted)
                     .ToListAsync(cancellationToken);
 
-                sessions.ForEach(s => s.IsDeleted = true);
+                if(sessions.Count != 0)
+                {
+                    sessions.ForEach(s => s.IsDeleted = true);
+                }
 
                 // TODO: implement user notification because the venue was deleted hence all sessions were deleted
 
