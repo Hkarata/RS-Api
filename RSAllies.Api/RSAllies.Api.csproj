@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\RSAllies.Analytics\RSAllies.Analytics.csproj" />
       <ProjectReference Include="..\RSAllies.Jobs\RSAllies.Jobs.csproj" />
       <ProjectReference Include="..\RSAllies.Mail\RSAllies.Mail.csproj" />
       <ProjectReference Include="..\RSAllies.SMS\RSAllies.SMS.csproj" />

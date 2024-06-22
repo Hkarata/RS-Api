@@ -9,6 +9,7 @@ using RSAllies.SMS.Extensions;
 using RSAllies.Test.Extensions;
 using RSAllies.Users.Extensions;
 using RSAllies.Venues.Extensions;
+using RSAllies.Analytics.Extension;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,8 @@ builder.Services.AddMailModuleServices(builder.Configuration, mediatRAssemblies)
 builder.Services.AddSmsModuleServices(builder.Configuration, mediatRAssemblies); // Sms Module Registration
 
 builder.Services.AddJobsModuleServices(builder.Configuration, mediatRAssemblies); // Jobs Module Registration
+
+builder.Services.AddAnalyticsModule(builder.Configuration, mediatRAssemblies); // Analytics Module Registration
 
 builder.Services.AddMediatR(configuration =>
     configuration.RegisterServicesFromAssemblies(mediatRAssemblies.ToArray()));
