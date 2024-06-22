@@ -2,6 +2,7 @@ using Carter;
 using Hangfire;
 using Microsoft.Extensions.Compliance.Classification;
 using Microsoft.Extensions.Compliance.Redaction;
+using RSAllies.Analytics.Extension;
 using RSAllies.Jobs.Extensions;
 using RSAllies.Mail.Extensions;
 using RSAllies.Shared.Extensions;
@@ -9,7 +10,6 @@ using RSAllies.SMS.Extensions;
 using RSAllies.Test.Extensions;
 using RSAllies.Users.Extensions;
 using RSAllies.Venues.Extensions;
-using RSAllies.Analytics.Extension;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
