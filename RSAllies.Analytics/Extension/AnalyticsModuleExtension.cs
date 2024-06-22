@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RSAllies.Analytics.Data;
 using System.Reflection;
 
 namespace RSAllies.Analytics.Extension
@@ -13,6 +14,14 @@ namespace RSAllies.Analytics.Extension
             List<Assembly> mediatRAssemblies
             )
         {
+            services.AddDbContext<AnalyticsDbContext>(options =>
+            {
+                options.UseSqlServer(configurationManager.GetConnectionString("AppDbConnection"));
+            });
+
+            // MediatR Registration
+            mediatRAssemblies.Add(typeof(AnalyticsModuleExtension).Assembly);
+
             return services;
         }
     }
