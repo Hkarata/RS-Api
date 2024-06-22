@@ -1,5 +1,8 @@
-﻿namespace RSAllies.Test.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RSAllies.Test.Entities
 {
+    [Table("SelectedChoices", Schema = "Test")]
     internal class SelectedChoice
     {
         public int Id { get; set; }
