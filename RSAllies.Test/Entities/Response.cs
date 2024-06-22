@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RSAllies.Test.Entities
 {
     [Table("Responses", Schema = "Test")]
+    [PrimaryKey("UserId")]
     internal class Response
     {
-        public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public Guid QuestionId { get; set; }
-        public Guid ChoiceId { get; set; }
-        public bool IsChoiceCorrect { get; set; }
+
+        public List<SelectedChoice>? SelectedChoices { get; set; }
     }
 }

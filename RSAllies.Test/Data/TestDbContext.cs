@@ -10,6 +10,7 @@ namespace RSAllies.Test.Data
         internal DbSet<Answer> Answers { get; set; }
         internal DbSet<Response> Responses { get; set; }
         internal DbSet<Score> Scores { get; set; }
+        internal DbSet<SelectedChoice> SelectedChoices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

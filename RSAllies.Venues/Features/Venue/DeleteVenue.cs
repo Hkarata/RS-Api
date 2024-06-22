@@ -36,7 +36,7 @@ namespace RSAllies.Venues.Features.Venue
                     .Where(s => s.VenueId == request.VenueId && !s.IsDeleted)
                     .ToListAsync(cancellationToken);
 
-                if(sessions.Count != 0)
+                if (sessions.Count != 0)
                 {
                     sessions.ForEach(s => s.IsDeleted = true);
                 }

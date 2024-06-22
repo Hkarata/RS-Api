@@ -3,12 +3,10 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Logging;
 using RSAllies.Shared.HelperTypes;
 using RSAllies.Test.Contracts.Requests;
 using RSAllies.Test.Data;
 using RSAllies.Test.Entities;
-using RSAllies.Test.Extensions;
 using RSAllies.Test.Features;
 
 namespace RSAllies.Test.Features
@@ -52,7 +50,7 @@ namespace RSAllies.Test.Features
 }
 
 
-public class CreateQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : ICarterModule
+public class CreateQuestionEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -68,8 +66,6 @@ public class CreateQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : IC
             };
 
             var result = await sender.Send(request);
-
-            logger.LogQuestionCreated(question);
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
