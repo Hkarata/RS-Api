@@ -312,7 +312,7 @@
                         u.Id
                     HAVING 
                         COUNT(b.Id) > 1
-                ) AS RepeatedBookings;
+                ) AS RepeatedBookings
         ";
 
         public static string TotalRepeatedBookingRateByVenue = @"
