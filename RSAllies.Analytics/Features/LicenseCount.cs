@@ -6,11 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using RSAllies.Analytics.Contracts;
 using RSAllies.Analytics.Data;
 using RSAllies.Shared.HelperTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.Analytics.Features
 {
@@ -22,6 +17,7 @@ namespace RSAllies.Analytics.Features
             {
                 var licenseCounts = await context.LicenseCounts
                     .FromSqlRaw(Queries.LicenseClassCount)
+                    .OrderBy(lc => lc.Class)
                     .ToListAsync(cancellationToken);
 
                 if (licenseCounts.Count == 0)

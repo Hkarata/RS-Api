@@ -6,11 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using RSAllies.Analytics.Contracts;
 using RSAllies.Analytics.Data;
 using RSAllies.Shared.HelperTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.Analytics.Features
 {
@@ -18,7 +13,7 @@ namespace RSAllies.Analytics.Features
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/api/age-groups", async(AnalyticsDbContext context, CancellationToken cancellationToken) =>
+            app.MapGet("/api/age-groups", async (AnalyticsDbContext context, CancellationToken cancellationToken) =>
             {
                 var ageGroups = await context.AgeGroupCounts
                     .FromSqlRaw(Queries.AgeGroupCount)

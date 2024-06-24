@@ -6,11 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using RSAllies.Analytics.Contracts;
 using RSAllies.Analytics.Data;
 using RSAllies.Shared.HelperTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.Analytics.Features
 {
@@ -22,7 +17,7 @@ namespace RSAllies.Analytics.Features
             {
                 var averageSessions = await context.AverageSessions
                     .FromSqlRaw(Queries.AverageSessions)
-                    //.OrderBy(x => x.VenueName)
+                    .OrderBy(x => x.VenueName)
                     .ToListAsync(cancellationToken);
 
                 if (averageSessions.Count == 0)

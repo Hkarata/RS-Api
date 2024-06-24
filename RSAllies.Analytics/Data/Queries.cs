@@ -129,7 +129,7 @@
             WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                DATEPART(HOUR, b.BookedAt);
+                DATEPART(HOUR, b.BookedAt)
         ";
 
         public static string PeakBookingDays = @"
