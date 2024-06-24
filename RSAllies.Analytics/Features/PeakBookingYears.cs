@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (peakBookingYears.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<PeakBookingYearDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<PeakBookingYearDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(peakBookingYears));

@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (bookingRates.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<BookingRateDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<BookingRateDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(bookingRates));

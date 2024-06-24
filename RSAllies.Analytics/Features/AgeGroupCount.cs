@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (ageGroups.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<AgeGroupDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<AgeGroupDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(ageGroups));

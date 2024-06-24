@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (RepeatedBookingCount!.RepeatedBookingCount == 0)
                 {
-                    return Results.Ok(Result.Failure<int>(Error.NullValue));
+                    return Results.Ok(Result.Failure<int>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(RepeatedBookingCount.RepeatedBookingCount));

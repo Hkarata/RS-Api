@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (rates.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<CancellationRateDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<CancellationRateDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(rates));

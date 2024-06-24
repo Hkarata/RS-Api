@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (counts.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<VenueBookingStatusCount>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<VenueBookingStatusCount>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(counts));

@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (licenseCounts.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<LicenseCount>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<LicenseCount>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(licenseCounts));

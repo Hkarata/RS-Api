@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (venues.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<MostPopularVenueDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<MostPopularVenueDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(venues));

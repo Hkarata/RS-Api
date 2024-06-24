@@ -26,7 +26,7 @@ namespace RSAllies.Analytics.Features
 
                 if (genderTests.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<GenderTestDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<GenderTestDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(genderTests));

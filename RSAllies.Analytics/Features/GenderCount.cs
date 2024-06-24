@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (genderCounts.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<GenderDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<GenderDto>>(Error.NullValue).Error);
                 }
 
                 var result = Result.Success(genderCounts);

@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (averageSessions.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<AverageSessionDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<AverageSessionDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(averageSessions));

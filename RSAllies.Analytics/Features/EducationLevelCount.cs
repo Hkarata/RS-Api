@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (educationLevelCounts.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<EducationLevelDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<EducationLevelDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(educationLevelCounts));

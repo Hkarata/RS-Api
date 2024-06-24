@@ -22,7 +22,7 @@ namespace RSAllies.Analytics.Features
 
                 if (peakBookings.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<PeakBookingTimesDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<PeakBookingTimesDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(peakBookings));

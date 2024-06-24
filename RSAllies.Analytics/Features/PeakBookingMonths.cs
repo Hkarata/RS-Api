@@ -21,7 +21,7 @@ namespace RSAllies.Analytics.Features
 
                 if (peakBookingMonths.Count == 0)
                 {
-                    return Results.Ok(Result.Failure<List<PeakBookingMonthDto>>(Error.NullValue));
+                    return Results.Ok(Result.Failure<List<PeakBookingMonthDto>>(Error.NullValue).Error);
                 }
 
                 return Results.Ok(Result.Success(peakBookingMonths));
