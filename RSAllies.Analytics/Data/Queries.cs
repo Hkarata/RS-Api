@@ -217,7 +217,7 @@
            WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
            GROUP BY 
-                v.Name;
+                v.Name
         ";
 
         public static string ConfirmationRate = @"
@@ -233,7 +233,7 @@
             WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                v.Name;
+                v.Name
         ";
 
         public static string BookingStatusCount = @"

@@ -1,15 +1,13 @@
 ﻿SELECT 
                 v.Name AS VenueName, 
-                COUNT(b.Id) AS Bookings
+                CAST(SUM(CASE WHEN b.Status = 2 THEN 1 ELSE 0 END) AS FLOAT) / COUNT(b.Id) AS ConfirmationRate
             FROM 
                 Venues.Venues v
-            INNER JOIN 
+            JOIN 
                 Venues.Sessions s ON v.Id = s.VenueId
-            INNER JOIN 
+            JOIN 
                 Venues.Bookings b ON s.Id = b.SessionId
             WHERE 
-                b.BookedAt >= DATEADD(YEAR, -1, GETDATE())
+                b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                v.Name
-            ORDER BY 
-                COUNT(b.Id) DESC
+                v.Name;
