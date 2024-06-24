@@ -13,7 +13,7 @@
             WHERE 
                 g.GenderType IN ('Male', 'Female')
             GROUP BY 
-                g.GenderType;
+                g.GenderType
         ";
 
         public static string AgeGroupCount = @"
@@ -50,7 +50,7 @@
             INNER JOIN 
                 Users.EducationLevels e ON u.EducationLevelId = e.Id
             GROUP BY 
-                e.Level;
+                e.Level
         ";
 
         public static string LicenseClassCount = @"
@@ -69,7 +69,7 @@
         public static string AverageSessions = @"
             SELECT 
                 v.Name AS VenueName, 
-                AVG(s.SessionCount) AS AverageSessions
+                ISNULL(CAST(AVG(s.SessionCount) AS FLOAT), 0) AS AverageSessions
             FROM 
                 Venues.Venues v
             LEFT JOIN 
@@ -89,19 +89,19 @@
                         DATEPART(YEAR, s.Date)
                 ) s ON v.Id = s.VenueId
             GROUP BY 
-                v.Name;
+                v.Name
         ";
 
         public static string BookingRate = @"
             SELECT 
                 v.Name AS VenueName, 
-                AVG(b.BookingCount) AS BookingRate
+                ISNULL(CAST(AVG(b.BookingCount) AS FLOAT), 0) AS BookingRate
             FROM 
                 Venues.Venues v
             LEFT JOIN 
                 (
                     SELECT 
-                        Session.VenueId, 
+                        s.VenueId, 
                         COUNT(*) AS BookingCount, 
                         DATEPART(MONTH, s.Date) AS Month, 
                         DATEPART(YEAR, s.Date) AS Year
@@ -112,12 +112,12 @@
                     WHERE 
                         s.Date >= DATEADD(MONTH, -3, GETDATE())
                     GROUP BY 
-                        Session.VenueId, 
+                        s.VenueId, 
                         DATEPART(MONTH, s.Date), 
                         DATEPART(YEAR, s.Date)
                 ) b ON v.Id = b.VenueId
             GROUP BY 
-                v.Name;
+                v.Name
         ";
 
         public static string PeakBookingTimes = @"
