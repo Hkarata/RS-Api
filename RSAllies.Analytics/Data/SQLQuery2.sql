@@ -1,13 +1,13 @@
 ﻿SELECT 
-                q.QuestionText as Question, 
-                COUNT(*) AS TotalResponses,
-                SUM(CASE WHEN sc.IsChoiceCorrect = 1 THEN 1 ELSE 0 END) AS CorrectResponses,
-                SUM(CASE WHEN sc.IsChoiceCorrect = 0 THEN 1 ELSE 0 END) AS IncorrectResponses
+                g.GenderType, 
+                COUNT(*) AS Total,
+                SUM(CASE WHEN s.ScoreValue >= 16 THEN 1 ELSE 0 END) AS Passed,
+                SUM(CASE WHEN s.ScoreValue < 16 THEN 1 ELSE 0 END) AS Failed
             FROM 
-                Test.Questions q
+                Test.Scores s
             JOIN 
-                Test.Choices c ON q.Id = c.QuestionId
+                Users.Users u ON s.UserId = u.Id
             JOIN 
-                Test.SelectedChoices sc ON sc.QuestionId = q.Id AND sc.ChoiceId = c.Id
+                Users.Genders g ON u.GenderId = g.Id
             GROUP BY 
-                q.QuestionText;
+                g.GenderType

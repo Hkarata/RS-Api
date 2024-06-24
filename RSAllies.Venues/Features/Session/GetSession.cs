@@ -24,7 +24,7 @@ namespace RSAllies.Venues.Features.Session
             {
                 var session = await context.Sessions
                     .AsNoTracking()
-                    .Where(s => s.Id == request.Id)
+                    .Where(s => s.Id == request.Id && !s.IsDeleted)
                     .Include(s => s.Venue)
                     .ThenInclude(s => s!.Region)
                     .Include(s => s.Venue!.District)

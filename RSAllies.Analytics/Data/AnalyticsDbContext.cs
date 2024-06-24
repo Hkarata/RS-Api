@@ -23,6 +23,7 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<VenueBookingStatusCount> VenueBookingStatusCounts { get; set; }
         public virtual DbSet<RepeatedBookingCountDto> RepeatedBookingCounts { get; set; }
         public virtual DbSet<VenueUtilizationDto> VenueUtilizations { get; set; }
+        public virtual DbSet<GenderTestDto> GenderTests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderDto>().HasNoKey();
@@ -43,6 +44,7 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<VenueBookingStatusCount>().HasNoKey();
             modelBuilder.Entity<RepeatedBookingCountDto>().HasNoKey();
             modelBuilder.Entity<VenueUtilizationDto>().HasNoKey();
+            modelBuilder.Entity<GenderTestDto>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }
