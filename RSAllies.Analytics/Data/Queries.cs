@@ -275,7 +275,7 @@
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
                 v.Name, 
-                b.Status;
+                b.Status
         ";
 
         public static string UserRepeatBookingRate = @"
@@ -291,7 +291,7 @@
             GROUP BY 
                 u.Id
             HAVING 
-                COUNT(b.Id) > 1;
+                COUNT(b.Id) > 1
         ";
 
         public static string TotalRepeatedBookingRate = @"
@@ -405,7 +405,7 @@
             JOIN 
                 Test.SelectedChoices sc ON sc.QuestionId = q.Id AND sc.ChoiceId = c.Id
             GROUP BY 
-                q.QuestionText;
+                q.QuestionText
         ";
 
         public static string ScoreAnalysis = @"
@@ -417,7 +417,7 @@
                     WHEN TotalScore BETWEEN 16 AND 20 THEN '16-20'
                     ELSE '21-25'
                 END AS ScoreRange,
-                COUNT(*) AS UserCount
+                COUNT(*) AS Count
             FROM 
                 (
                     SELECT 
@@ -435,7 +435,7 @@
                     WHEN TotalScore BETWEEN 11 AND 15 THEN '11-15'
                     WHEN TotalScore BETWEEN 16 AND 20 THEN '16-20'
                     ELSE '21-25'
-                END;
+                END
         ";
 
         public static string TestPassAgedGroupAnalysis = @"
@@ -447,7 +447,7 @@
                     WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 42 AND 49 THEN '42-49'
                     ELSE '50+'
                 END AS AgeGroup,
-                COUNT(*) AS UserCount
+                COUNT(*) AS Count
             FROM 
                 Test.Scores s
             JOIN 
@@ -461,7 +461,7 @@
                     WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 34 AND 41 THEN '34-41'
                     WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 42 AND 49 THEN '42-49'
                     ELSE '50+'
-                END;
+                END
         ";
 
         public static string QuestionGenderAnalysis = @"
@@ -483,7 +483,7 @@
                 Users.Genders g ON u.GenderId = g.Id
             GROUP BY 
                 q.QuestionText, 
-                g.GenderType;
+                g.GenderType
         ";
 
 
@@ -516,7 +516,7 @@
                         WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 34 AND 41 THEN '34-41'
                         WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 42 AND 49 THEN '42-49'
                         ELSE '50+'
-                    END;
+                    END
         ";
 
         public static string TestRetakeCount = @"

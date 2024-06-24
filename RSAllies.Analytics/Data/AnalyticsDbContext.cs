@@ -25,6 +25,15 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<VenueUtilizationDto> VenueUtilizations { get; set; }
         public virtual DbSet<GenderTestDto> GenderTests { get; set; }
         public virtual DbSet<QuestionAnalysisDto> QuestionAnalyses { get; set; }
+        public virtual DbSet<QuestionDifficultyDto> QuestionDifficulties { get; set; }
+        public virtual DbSet<ScoresDto> Scores { get; set; }
+        public virtual DbSet<TestPassAgeGroupDto> TestPassAgeGroupCounts { get; set; }
+        public virtual DbSet<QuestionGenderDto> QuestionGenderCounts { get; set; }
+        public virtual DbSet<QuestionAgeGroupDto> QuestionAgeGroups { get; set; }
+
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderDto>().HasNoKey();
@@ -47,6 +56,11 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<VenueUtilizationDto>().HasNoKey();
             modelBuilder.Entity<GenderTestDto>().HasNoKey();
             modelBuilder.Entity<QuestionAnalysisDto>().HasNoKey();
+            modelBuilder.Entity<QuestionDifficultyDto>().HasNoKey();
+            modelBuilder.Entity<ScoresDto>().HasNoKey();
+            modelBuilder.Entity<TestPassAgeGroupDto>().HasNoKey();
+            modelBuilder.Entity<QuestionGenderDto>().HasNoKey();
+            modelBuilder.Entity<QuestionAgeGroupDto>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }
