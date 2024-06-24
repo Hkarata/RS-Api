@@ -251,7 +251,7 @@
             WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                b.Status;
+                b.Status
         ";
 
         public static string BookingStatusCountByVenue = @"

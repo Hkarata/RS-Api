@@ -1,6 +1,13 @@
 ﻿SELECT 
                 v.Name AS VenueName, 
-                CAST(SUM(CASE WHEN b.Status = 2 THEN 1 ELSE 0 END) AS FLOAT) / COUNT(b.Id) AS ConfirmationRate
+                CASE 
+                    WHEN b.Status = 0 THEN 'Booked'
+                    WHEN b.Status = 1 THEN 'Paid'
+                    WHEN b.Status = 2 THEN 'Confirmed'
+                    WHEN b.Status = 3 THEN 'Cancelled'
+                    ELSE 'Unknown'
+                END AS Status, 
+                COUNT(b.Id) AS Count
             FROM 
                 Venues.Venues v
             JOIN 
@@ -10,4 +17,5 @@
             WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                v.Name;
+                v.Name, 
+                b.Status;

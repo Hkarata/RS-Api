@@ -19,6 +19,8 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<LeastPopularVenueDto> LeastPopularVenues { get; set; }
         public virtual DbSet<CancellationRateDto> CancellationRates { get; set; }
         public virtual DbSet<ConfirmationRateDto> ConfirmationRates { get; set; }
+        public virtual DbSet<BookingStatusCountDto> BookingStatusCounts { get; set; }
+        public virtual DbSet<VenueBookingStatusCount> VenueBookingStatusCounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,8 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<LeastPopularVenueDto>().HasNoKey();
             modelBuilder.Entity<CancellationRateDto>().HasNoKey();
             modelBuilder.Entity<ConfirmationRateDto>().HasNoKey();
+            modelBuilder.Entity<BookingStatusCountDto>().HasNoKey();
+            modelBuilder.Entity<VenueBookingStatusCount>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }
