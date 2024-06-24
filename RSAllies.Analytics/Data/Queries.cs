@@ -336,7 +336,7 @@
         public static string VenueUtilizationRate = @"
             SELECT 
                 v.Name AS VenueName, 
-                CAST(SUM(b.BookingCount) AS FLOAT) / (SUM(s.Capacity) * COUNT(DISTINCT s.Id)) AS UtilizationRate
+                ISNULL(CAST(SUM(b.BookingCount) AS FLOAT) / (SUM(s.Capacity) * COUNT(DISTINCT s.Id)),0) AS UtilizationRate
             FROM 
                 Venues.Venues v
             JOIN 
@@ -357,7 +357,7 @@
             WHERE 
                 s.Date >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                v.Name;
+                v.Name
         ";
 
         public static string GenderTestAnalysis = @"
@@ -373,7 +373,7 @@
             JOIN 
                 Users.Genders g ON u.GenderId = g.Id
             GROUP BY 
-                g.GenderType;
+                g.GenderType
         ";
 
         public static string QuestionAnalysis = @"
