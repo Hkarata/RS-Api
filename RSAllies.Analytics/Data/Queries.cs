@@ -389,7 +389,7 @@
             JOIN 
                 Test.SelectedChoices sc ON sc.QuestionId = q.Id AND sc.ChoiceId = c.Id
             GROUP BY 
-                q.QuestionText;
+                q.QuestionText
         ";
 
 

@@ -37,13 +37,15 @@ namespace RSAllies.Venues.Features.Venue
                         Capacity = v.Capacity,
                         District = v.District!.Name,
                         Region = v.Region!.Name,
-                        Sessions = v.Sessions!.Select(s => new SessionDto
-                        {
-                            Id = s.Id,
-                            Date = s.Date,
-                            StartTime = s.StartTime,
-                            EndTime = s.EndTime
-                        }).ToList()
+                        Sessions = v.Sessions!
+                            .Where(s => !s.IsDeleted)
+                            .Select(s => new SessionDto
+                            {
+                                Id = s.Id,
+                                Date = s.Date,
+                                StartTime = s.StartTime,
+                                EndTime = s.EndTime
+                            }).ToList()
                     })
                     .SingleOrDefaultAsync(cancellationToken);
 
