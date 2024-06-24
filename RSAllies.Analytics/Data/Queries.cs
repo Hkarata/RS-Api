@@ -171,7 +171,7 @@
         public static string MostPopularVenues = @"
             SELECT 
                 v.Name AS VenueName, 
-                COUNT(b.Id) AS BookingCount
+                COUNT(b.Id) AS Bookings
             FROM 
                 Venues.Venues v
             INNER JOIN 
@@ -183,13 +183,13 @@
             GROUP BY 
                 v.Name
             ORDER BY 
-                COUNT(b.Id) DESC;
+                COUNT(b.Id) DESC
         ";
 
         public static string LeastPopularVenues = @"
             SELECT 
                 v.Name AS VenueName, 
-                COUNT(b.Id) AS BookingCount
+                COUNT(b.Id) AS Bookings
             FROM 
                 Venues.Venues v
             INNER JOIN 
@@ -201,7 +201,7 @@
             GROUP BY 
                 v.Name
             ORDER BY 
-                COUNT(b.Id) ASC;
+                COUNT(b.Id) ASC
         ";
 
         public static string CancellationRate = @"

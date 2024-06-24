@@ -1,9 +1,15 @@
 ﻿SELECT 
-                DATEPART(YEAR, b.BookedAt) AS Year, 
-                COUNT(*) AS Bookings
+                v.Name AS VenueName, 
+                COUNT(b.Id) AS Bookings
             FROM 
-                Venues.Bookings b
+                Venues.Venues v
+            INNER JOIN 
+                Venues.Sessions s ON v.Id = s.VenueId
+            INNER JOIN 
+                Venues.Bookings b ON s.Id = b.SessionId
             WHERE 
-                b.BookedAt >= DATEADD(YEAR, -5, GETDATE())
+                b.BookedAt >= DATEADD(YEAR, -1, GETDATE())
             GROUP BY 
-                DATEPART(YEAR, b.BookedAt);
+                v.Name
+            ORDER BY 
+                COUNT(b.Id) DESC
