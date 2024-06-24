@@ -134,38 +134,38 @@
 
         public static string PeakBookingDays = @"
             SELECT 
-                DATENAME(WEEKDAY, b.BookedAt) AS BookingDay, 
-                COUNT(*) AS BookingCount
+                DATENAME(WEEKDAY, b.BookedAt) AS Day, 
+                COUNT(*) AS Bookings
             FROM 
                 Venues.Bookings b
             WHERE 
                 b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
             GROUP BY 
-                DATENAME(WEEKDAY, b.BookedAt);
+                DATENAME(WEEKDAY, b.BookedAt)
         ";
 
         public static string PeakBookingMonths = @"
             SELECT 
-                DATENAME(MONTH, b.BookedAt) AS BookingMonth, 
-                COUNT(*) AS BookingCount
+                DATENAME(MONTH, b.BookedAt) AS Month, 
+                COUNT(*) AS Bookings
             FROM 
                 Venues.Bookings b
             WHERE 
                 b.BookedAt >= DATEADD(YEAR, -1, GETDATE())
             GROUP BY 
-                DATENAME(MONTH, b.BookedAt);
+                DATENAME(MONTH, b.BookedAt)
         ";
 
         public static string PeakBookingYears = @"
             SELECT 
-                DATEPART(YEAR, b.BookedAt) AS BookingYear, 
-                COUNT(*) AS BookingCount
+                DATEPART(YEAR, b.BookedAt) AS Year, 
+                COUNT(*) AS Bookings
             FROM 
                 Venues.Bookings b
             WHERE 
-                b.BookedAt >= DATEADD(YEAR, -1, GETDATE())
+                b.BookedAt >= DATEADD(YEAR, -5, GETDATE())
             GROUP BY 
-                DATEPART(YEAR, b.BookedAt);
+                DATEPART(YEAR, b.BookedAt)
         ";
 
         public static string MostPopularVenues = @"

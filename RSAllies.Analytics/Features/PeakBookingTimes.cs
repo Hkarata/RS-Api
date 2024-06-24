@@ -9,7 +9,7 @@ using RSAllies.Shared.HelperTypes;
 
 namespace RSAllies.Analytics.Features
 {
-    public class PeakBookingTime : ICarterModule
+    public class PeakBookingTimes : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {

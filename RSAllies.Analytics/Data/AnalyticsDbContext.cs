@@ -12,6 +12,9 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<AverageSessionDto> AverageSessions { get; set; }
         public virtual DbSet<BookingRateDto> BookingRates { get; set; }
         public virtual DbSet<PeakBookingTimesDto> PeakBookings { get; set; }
+        public virtual DbSet<PeakBookingDaysDto> PeakBookingDays { get; set; }
+        public virtual DbSet<PeakBookingMonthDto> PeakBookingMonths { get; set; }
+        public virtual DbSet<PeakBookingYearDto> PeakBookingYears { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +25,9 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<AverageSessionDto>().HasNoKey();
             modelBuilder.Entity<BookingRateDto>().HasNoKey();
             modelBuilder.Entity<PeakBookingTimesDto>().HasNoKey();
+            modelBuilder.Entity<PeakBookingDaysDto>().HasNoKey();
+            modelBuilder.Entity<PeakBookingMonthDto>().HasNoKey();
+            modelBuilder.Entity<PeakBookingYearDto>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }

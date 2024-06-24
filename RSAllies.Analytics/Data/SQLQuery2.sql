@@ -1,9 +1,9 @@
 ﻿SELECT 
-                DATEPART(HOUR, b.BookedAt) AS BookingHour, 
-                COUNT(*) AS BookingCount
+                DATEPART(YEAR, b.BookedAt) AS Year, 
+                COUNT(*) AS Bookings
             FROM 
                 Venues.Bookings b
             WHERE 
-                b.BookedAt >= DATEADD(MONTH, -3, GETDATE())
+                b.BookedAt >= DATEADD(YEAR, -5, GETDATE())
             GROUP BY 
-                DATEPART(HOUR, b.BookedAt);
+                DATEPART(YEAR, b.BookedAt);
