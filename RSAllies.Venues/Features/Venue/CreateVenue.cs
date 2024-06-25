@@ -56,7 +56,7 @@ namespace RSAllies.Venues.Features.Venue
     }
 }
 
-public class CreateVenueEndPoint(ILogger<CreateVenueEndPoint> logger) : ICarterModule
+public class CreateVenueEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -73,11 +73,6 @@ public class CreateVenueEndPoint(ILogger<CreateVenueEndPoint> logger) : ICarterM
             };
 
             var result = await sender.Send(request);
-
-            if (result.IsSuccess)
-            {
-                logger.LogVenueCreated(venue);
-            }
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })

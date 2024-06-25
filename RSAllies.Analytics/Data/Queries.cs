@@ -532,12 +532,12 @@
                         UserId
                     HAVING 
                         COUNT(*) > 1
-                ) AS UserRetakes;
+                ) AS UserRetakes
         ";
 
         public static string TestRetakeCountByGender = @"
             SELECT 
-                g.GenderType, 
+                g.GenderType as Gender, 
                 COUNT(*) AS RetakeCount
             FROM 
                 (
@@ -555,7 +555,7 @@
             JOIN 
                 Users.Genders g ON u.GenderId = g.Id
             GROUP BY 
-                g.GenderType;
+                g.GenderType
         ";
 
         public static string TestRetakeByAgeGroup = @"
@@ -588,7 +588,7 @@
                     WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 34 AND 41 THEN '34-41'
                     WHEN DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) BETWEEN 42 AND 49 THEN '42-49'
                     ELSE '50+'
-                END;
+                END
 
         ";
     }

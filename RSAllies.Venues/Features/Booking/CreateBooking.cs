@@ -51,19 +51,15 @@ namespace RSAllies.Venues.Features.Booking
     }
 }
 
-public class CreateBookingEndPoint(ILogger<CreateBookingEndPoint> logger) : ICarterModule
+public class CreateBookingEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/booking", async (CreateBookingDto booking, ISender sender) =>
         {
             var request = new CreateBooking.Command { UserId = booking.UserId, SessionId = booking.SessionId };
-            var result = await sender.Send(request);
 
-            if (result.IsSuccess)
-            {
-                logger.LogBookingCreated(booking);
-            }
+            var result = await sender.Send(request);
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
         })

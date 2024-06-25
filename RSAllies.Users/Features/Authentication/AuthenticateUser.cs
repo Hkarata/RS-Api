@@ -43,7 +43,7 @@ internal abstract class AuthenticateUser
     }
 }
 
-public class AuthenticateUserEndPoint(ILogger<AuthenticateUserEndPoint> logger) : ICarterModule
+public class AuthenticateUserEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -56,15 +56,6 @@ public class AuthenticateUserEndPoint(ILogger<AuthenticateUserEndPoint> logger) 
                 };
 
                 var result = await sender.Send(request);
-
-                if (result.IsSuccess)
-                {
-                    logger.LogUserAuthenticated(user);
-                }
-                else
-                {
-                    logger.LogUserAuthenticationFailed(user);
-                }
 
                 return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
             })

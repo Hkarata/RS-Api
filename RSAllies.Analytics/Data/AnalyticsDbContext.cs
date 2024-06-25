@@ -30,6 +30,9 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<TestPassAgeGroupDto> TestPassAgeGroupCounts { get; set; }
         public virtual DbSet<QuestionGenderDto> QuestionGenderCounts { get; set; }
         public virtual DbSet<QuestionAgeGroupDto> QuestionAgeGroups { get; set; }
+        public virtual DbSet<TestRetakeDto> TestRetakeCounts { get; set; }
+        public virtual DbSet<TestGenderDto> TestGenderCounts { get; set; }
+        public virtual DbSet<TestRetakeAgeGroupDto> TestRetakeAgeGroupCounts { get; set; }
 
 
 
@@ -61,6 +64,9 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<TestPassAgeGroupDto>().HasNoKey();
             modelBuilder.Entity<QuestionGenderDto>().HasNoKey();
             modelBuilder.Entity<QuestionAgeGroupDto>().HasNoKey();
+            modelBuilder.Entity<TestRetakeDto>().HasNoKey();
+            modelBuilder.Entity<TestGenderDto>().HasNoKey();
+            modelBuilder.Entity<TestRetakeAgeGroupDto>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }

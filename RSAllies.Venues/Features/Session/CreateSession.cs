@@ -60,7 +60,7 @@ namespace RSAllies.Venues.Features.Session
     }
 }
 
-public class CreateSessionEndPoint(ILogger<CreateSessionEndPoint> logger) : ICarterModule
+public class CreateSessionEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -75,11 +75,6 @@ public class CreateSessionEndPoint(ILogger<CreateSessionEndPoint> logger) : ICar
             };
 
             var result = await sender.Send(request);
-
-            if (result.IsSuccess)
-            {
-                logger.LogSessionCreated(session);
-            }
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
