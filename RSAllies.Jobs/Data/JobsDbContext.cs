@@ -4,7 +4,7 @@ namespace RSAllies.Jobs.Data
 {
     public class JobsDbContext : DbContext
     {
-        public JobsDbContext(DbContextOptions options) : base(options)
+        public JobsDbContext(DbContextOptions<JobsDbContext> options) : base(options)
         {
         }
 
