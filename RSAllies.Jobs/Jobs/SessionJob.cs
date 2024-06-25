@@ -6,12 +6,17 @@ namespace RSAllies.Jobs.Jobs
 {
     internal class SessionJob(DatabaseService database, SmtpClient smtpClient)
     {
+        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
+
         public async Task ExecuteAsync(Guid sessionId, CancellationToken cancellationToken)
         {
             var venue = await database.GetVenueDetails(sessionId, cancellationToken);
             var users = await database.GetUserDetails(sessionId, cancellationToken);
 
             DocumentService.GenerateSessionPdf(sessionId, venue, users);
+
+            
 
             // Send email
 
@@ -40,7 +45,9 @@ namespace RSAllies.Jobs.Jobs
                 attachment
             };
 
+            await _semaphore.WaitAsync(cancellationToken);
             await smtpClient.SendAsync(message, cancellationToken);
+            _semaphore.Release();
 
         }
     }
