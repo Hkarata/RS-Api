@@ -32,7 +32,7 @@ namespace RSAllies.Venues.Features.Booking
                     .Select(b => new BookingDto
                     {
                         Id = b.Id,
-                        BookedAt = b.BookedAt,
+                        BookedAt = b.Session!.Date,
                         Status = b.Status,
                         StartTime = b.Session!.StartTime,
                         EndTime = b.Session.EndTime,
