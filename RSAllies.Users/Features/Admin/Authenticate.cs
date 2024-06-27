@@ -27,7 +27,7 @@ namespace RSAllies.Users.Features.Admin
             {
                 var query = await context.Administrators
                     .AsNoTracking()
-                    .Where(a => a.Username == request.Username && a.Password == request.Password && a.IsActive)
+                    .Where(a => a.Username == request.Username && a.IsActive)
                     .Include(a => a.Role)
                     .SingleOrDefaultAsync(cancellationToken);
 
