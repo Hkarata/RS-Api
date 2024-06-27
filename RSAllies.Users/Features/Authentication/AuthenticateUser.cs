@@ -10,6 +10,7 @@ using RSAllies.Shared.Requests;
 using RSAllies.Users.Contracts.Responses;
 using RSAllies.Users.Data;
 using RSAllies.Users.Extensions;
+using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.Authentication;
 
@@ -25,20 +26,34 @@ internal abstract class AuthenticateUser
     {
         public async Task<Result<UserDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var account = await context.Accounts
-                .Where(ua => ua.Phone == request.Phone && ua.Password == request.Password && !ua.IsDeleted)
+            var query = await context.Accounts
+                .Where(ua => ua.Phone == request.Phone && !ua.IsDeleted)
                 .Include(ua => ua.User)
-                .Select(ua => new UserDto
-                {
-                    Id = ua.User!.Id,
-                    FirstName = ua.User.FirstName,
-                    LastName = ua.User.LastName,
-                    Email = ua.Email,
-                    Phone = ua.Phone
-                })
                 .SingleOrDefaultAsync(cancellationToken);
 
-            return account ?? Result.Failure<UserDto>(new Error("AuthenticateUser.NonExistentUser", "The specified user does not exist"));
+
+            if (query is null)
+            {
+                return Result.Failure<UserDto>(
+                    new Error("AuthenticateUser.NonExistentUser", "The specified user does not exist"));
+            }
+
+            if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+            {
+                return Result.Failure<UserDto>(
+                    new Error("AuthenticateUser.InvalidPassword", "The specified password is incorrect"));
+            }
+
+            var account = new UserDto
+            {
+                Id = query!.User!.Id,
+                FirstName = query.User.FirstName,
+                LastName = query.User.LastName,
+                Email = query.Email,
+                Phone = query.Phone
+            };
+
+            return account;
         }
     }
 }

@@ -8,6 +8,7 @@ using RSAllies.Shared.HelperTypes;
 using RSAllies.Shared.Notifications;
 using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Data;
+using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.User;
 
@@ -25,12 +26,14 @@ internal abstract class CreateAccount
     {
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
+            var hashedPassword = PasswordService.HashPassword(request.Password);
+
             var account = new Entities.UserAccount
             {
                 Id = request.UserId,
                 Email = request.Email,
                 Phone = request.Phone,
-                Password = request.Password,
+                Password = hashedPassword,
                 CreatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };

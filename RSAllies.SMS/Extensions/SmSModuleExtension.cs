@@ -27,15 +27,6 @@ public static class SmSModuleExtension
 
         services.AddSingleton<MessageService>();
 
-        services.AddHttpClient<OtpService>(client =>
-        {
-            var key = "8a744d33c22c6111";
-            var secret = "ZTAzOTE2ZjU1YzQ0Njk5MTA2NjVlYjE3ZDA2NTY5OWZjM2YwOGJiOTM5MWZmMjU4MGFmZjdjNzkwNGM3YTA3MQ==";
-            var auth = Encoding.UTF8.GetBytes($"{key}:{secret}");
-            client.DefaultRequestHeaders.Add("Authorization", $"Basic {Convert.ToBase64String(auth)}");
-            client.BaseAddress = new Uri("https://apiotp.beem.africa");
-        });
-
         return services;
     }
 

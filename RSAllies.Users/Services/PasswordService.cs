@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Globalization;
 using System.Security.Cryptography;
 
 namespace RSAllies.Users.Services;
 
 public static class PasswordService
 {
+
     private const int IterCount = 100_000;
 
     private static byte[] HashPassword(string password, RandomNumberGenerator rng, KeyDerivationPrf prf = KeyDerivationPrf.HMACSHA512, int iterCount = IterCount, int saltSize = 128 / 8, int numBytesRequested = 256 / 8)
@@ -67,7 +69,7 @@ public static class PasswordService
         }
     }
 
-    private static uint ReadNetworkByteOrder(IReadOnlyList<byte> buffer, int offset)
+    internal static uint ReadNetworkByteOrder(IReadOnlyList<byte> buffer, int offset)
     {
         return ((uint)(buffer[offset + 0]) << 24)
                | ((uint)(buffer[offset + 1]) << 16)
@@ -75,11 +77,57 @@ public static class PasswordService
                | ((uint)(buffer[offset + 3]));
     }
 
-    private static void WriteNetworkByteOrder(IList<byte> buffer, int offset, uint value)
+    internal static void WriteNetworkByteOrder(IList<byte> buffer, int offset, uint value)
     {
         buffer[offset + 0] = (byte)(value >> 24);
         buffer[offset + 1] = (byte)(value >> 16);
         buffer[offset + 2] = (byte)(value >> 8);
         buffer[offset + 3] = (byte)(value >> 0);
+    }
+
+    internal static string HashPassword(string password)
+    {
+        byte[] hashedPassword = HashPassword(password, RandomNumberGenerator.Create());
+        string stringValue = hashedPassword.Length switch
+        {
+            0 => "null",
+            1 => "empty",
+            _ => BitConverter.ToString(hashedPassword).Replace("-", "")
+        };
+        return stringValue;
+    }
+
+    internal static bool VerifyHashedPassword(string stringValue, string password)
+    {
+        byte[] bytesValue = GetByteArrayFromStringValue(stringValue);
+        return VerifyHashedPassword(bytesValue, password, out _, out _);
+    }
+
+    static byte[] GetByteArrayFromStringValue(string stringValue)
+    {
+        return stringValue switch
+        {
+            "null" => new byte[0],
+            "empty" => new byte[] { 0 },
+            _ => ConvertHexStringToByteArray(stringValue)
+        };
+    }
+
+    static byte[] ConvertHexStringToByteArray(string hexString)
+    {
+        if (hexString.Length % 2 != 0)
+        {
+            throw new ArgumentException("Hex string must have an even length");
+        }
+
+        int length = hexString.Length / 2;
+        byte[] byteArray = new byte[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            byteArray[i] = byte.Parse(hexString.Substring(i * 2, 2), NumberStyles.HexNumber);
+        }
+
+        return byteArray;
     }
 }
