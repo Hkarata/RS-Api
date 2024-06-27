@@ -3,11 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Logging;
 using RSAllies.Shared.HelperTypes;
 using RSAllies.Venues.Contracts.Requests;
 using RSAllies.Venues.Data;
-using RSAllies.Venues.Extensions;
 using RSAllies.Venues.Features.Venue;
 using RSAllies.Venues.Services;
 

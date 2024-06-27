@@ -16,7 +16,7 @@ namespace RSAllies.Jobs.Jobs
 
             DocumentService.GenerateSessionPdf(sessionId, venue, users);
 
-            
+
 
             // Send email
 

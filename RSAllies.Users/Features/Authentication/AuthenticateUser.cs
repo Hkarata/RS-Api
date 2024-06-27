@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using RSAllies.Shared.HelperTypes;
 using RSAllies.Shared.Requests;
 using RSAllies.Users.Contracts.Responses;
 using RSAllies.Users.Data;
-using RSAllies.Users.Extensions;
 using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.Authentication;

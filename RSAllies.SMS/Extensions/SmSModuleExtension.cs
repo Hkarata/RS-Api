@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using RSAllies.SMS.Data;
 using RSAllies.SMS.Services;
 using System.Reflection;
-using System.Text;
 
 namespace RSAllies.SMS.Extensions;
 

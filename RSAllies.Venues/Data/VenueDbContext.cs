@@ -10,6 +10,7 @@ namespace RSAllies.Venues.Data
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<District> Districts { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
