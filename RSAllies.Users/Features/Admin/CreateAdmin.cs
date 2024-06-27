@@ -10,6 +10,7 @@ using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Data;
 using RSAllies.Users.Entities;
 using RSAllies.Users.Features.Admin;
+using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.Admin
 {
@@ -38,6 +39,8 @@ namespace RSAllies.Users.Features.Admin
                     return Result.Failure(new Error("CreateAdmin.Exists", "The specified admin already exists"));
                 }
 
+                var hashedPassword = PasswordService.HashPassword(request.Password);
+
                 var admin = new Administrator
                 {
                     Id = Guid.NewGuid(),
@@ -46,7 +49,7 @@ namespace RSAllies.Users.Features.Admin
                     Username = request.Username,
                     Phone = request.Phone,
                     Email = request.Email,
-                    Password = request.Password,
+                    Password = hashedPassword,
                     IsActive = true,
                     RoleId = request.RoleId
                 };

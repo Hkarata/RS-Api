@@ -9,6 +9,7 @@ using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Contracts.Responses;
 using RSAllies.Users.Data;
 using RSAllies.Users.Features.Admin;
+using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.Admin
 {
@@ -24,22 +25,28 @@ namespace RSAllies.Users.Features.Admin
         {
             public async Task<Result<AdminDto>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var admin = await context.Administrators
+                var query = await context.Administrators
                     .AsNoTracking()
                     .Where(a => a.Username == request.Username && a.Password == request.Password && a.IsActive)
                     .Include(a => a.Role)
-                    .Select(a => new AdminDto
-                    {
-                        Id = a.Id,
-                        Username = a.Username,
-                        Role = a.Role!.Name
-                    })
                     .SingleOrDefaultAsync(cancellationToken);
 
-                if (admin is null)
+                if (query is null)
                 {
-                    return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "authentication failed"));
+                    return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "invalid account"));
                 }
+
+                if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+                {
+                    return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "invalid password"));
+                }
+
+                var admin = new AdminDto
+                {
+                    Id = query.Id,
+                    Username = query.Username,
+                    Role = query.Role!.Name
+                };
 
                 return admin;
             }
