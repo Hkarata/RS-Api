@@ -58,7 +58,7 @@ namespace RSAllies.Users.Features.Admin
 
                 await context.SaveChangesAsync(cancellationToken);
 
-                await mediator.Publish(new AdminCreated(admin.Username, admin.Password, admin.Phone, admin.Email), cancellationToken);
+                await mediator.Publish(new AdminCreated(admin.Username, request.Password, admin.Phone, admin.Email), cancellationToken);
 
                 return Result.Success();
             }
