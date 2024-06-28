@@ -9,8 +9,7 @@ namespace RSAllies.Jobs.Features
     {
         public Task Handle(SessionCreated notification, CancellationToken cancellationToken)
         {
-            TimeSpan subtractedTimeSpan = TimeSpan.FromMinutes(30);
-            var time = DateTime.UtcNow - notification.ScheduledAt.Add(-subtractedTimeSpan);
+            var time = notification.ScheduledAt.AddHours(-1);
             jobClient.Schedule<SessionJob>(x => x.ExecuteAsync(notification.SessionId, cancellationToken), time);
             return Task.CompletedTask;
         }
