@@ -3,7 +3,9 @@
     public class VenueBookingStatusCount
     {
         public string VenueName { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
-        public int Count { get; set; }
+        public int Booked { get; set; }
+        public int Paid { get; set; }
+        public int Confirmed { get; set; }
+        public int Cancelled { get; set; }
     }
 }
