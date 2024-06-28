@@ -7,11 +7,10 @@ using RSAllies.Test.Services;
 
 namespace RSAllies.Test.Messaging
 {
-    internal class ResponseConsumer(TestDbContext dbContext, ILogger<ResponseConsumer> logger) : IConsumer<UserResponseDto>
+    internal class ResponseConsumer(TestDbContext dbContext) : IConsumer<UserResponseDto>
     {
         public Task Consume(ConsumeContext<UserResponseDto> context)
         {
-            logger.LogInformation("ndcn");
 
             var score = MarkerService.Mark(dbContext, context.Message.Answers!);
 
@@ -24,6 +23,24 @@ namespace RSAllies.Test.Messaging
             };
 
             dbContext.Scores.Add(userScore);
+
+            var response = new Entities.Response
+            {
+                UserId = context.Message.UserId,
+                SelectedChoices = context.Message.Answers!
+                    .Select(a => new SelectedChoice
+                    {
+                        QuestionId = a.QuestionId,
+                        ChoiceId = a.ChoiceId,
+                        IsChoiceCorrect = dbContext.Choices
+                            .Where(c => c.Id == a.ChoiceId)
+                            .Select(c => c.IsCorrect)
+                            .FirstOrDefault()
+                    })
+                    .ToList()
+            };
+
+            dbContext.Responses.Add(response);
 
             dbContext.SaveChanges();
 
