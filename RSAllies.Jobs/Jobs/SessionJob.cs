@@ -14,6 +14,9 @@ namespace RSAllies.Jobs.Jobs
             var venue = await database.GetVenueDetails(sessionId, cancellationToken);
             var users = await database.GetUserDetails(sessionId, cancellationToken);
 
+            // Cancel other bookings
+            await database.CancelUnconfirmedBookings(sessionId, cancellationToken);
+
             DocumentService.GenerateSessionPdf(sessionId, venue, users);
 
 

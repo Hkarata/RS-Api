@@ -77,9 +77,8 @@ namespace RSAllies.Jobs.Services
                                 {
                                     columns.ConstantColumn(50);
                                     columns.RelativeColumn();
+                                    columns.ConstantColumn(70);
                                     columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                    columns.ConstantColumn(50);
                                 });
 
                                 table.Header(header =>
@@ -93,25 +92,19 @@ namespace RSAllies.Jobs.Services
                                     header.Cell()
                                     .Background(Colors.DeepOrange.Medium)
                                     .Padding(1, Unit.Millimetre)
-                                    .Text("First Name")
+                                    .Text("Name")
                                     .FontColor(Colors.White);
 
                                     header.Cell()
                                     .Background(Colors.DeepOrange.Medium)
                                     .Padding(1, Unit.Millimetre)
-                                    .Text("Middle Name")
+                                    .Text("Gender")
                                     .FontColor(Colors.White);
 
                                     header.Cell()
                                     .Background(Colors.DeepOrange.Medium)
                                     .Padding(1, Unit.Millimetre)
-                                    .Text("Last Name")
-                                    .FontColor(Colors.White);
-
-                                    header.Cell()
-                                    .Background(Colors.DeepOrange.Medium)
-                                    .Padding(1, Unit.Millimetre)
-                                    .Text("ATD")
+                                    .Text("NIN or Passport")
                                     .FontColor(Colors.White);
 
                                 });
@@ -121,10 +114,9 @@ namespace RSAllies.Jobs.Services
                                 foreach (var user in users)
                                 {
                                     table.Cell().Padding(1, Unit.Millimetre).Text($"{i}");
-                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.FirstName}");
-                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.MiddleName}");
-                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.LastName}");
-                                    table.Cell().Padding(1, Unit.Millimetre).Text("");
+                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.FirstName} {user.MiddleName} {user.LastName}");
+                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.Gender}");
+                                    table.Cell().Padding(1, Unit.Millimetre).Text($"{user.Identification}");
                                     i++;
                                 }
 

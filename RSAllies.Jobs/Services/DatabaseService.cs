@@ -50,8 +50,9 @@ namespace RSAllies.Jobs.Services
 
             foreach (var UserId in usersID)
             {
-                string thirdQuery = $"SELECT u.FirstName, u.MiddleName, u.LastName " +
+                string thirdQuery = $"SELECT u.FirstName, u.MiddleName, u.LastName, u.Identification, g.GenderType as Gender" +
                                     $"FROM Users.Users u " +
+                                    $"JOIN Users.Genders g ON u.GenderId = g.Id " +
                                     $"WHERE u.Id = @UserId";
 
                 var userIdParameter = new SqlParameter("@UserId", UserId);
@@ -64,6 +65,22 @@ namespace RSAllies.Jobs.Services
             }
 
             return users;
+        }
+
+        public async Task CancelUnconfirmedBookings(Guid sessionId, CancellationToken cancellationToken)
+        {
+            // cancel all bookings for a specific session whose status is not confirmed
+            string fourthQuery = $"UPDATE Venues.Bookings " +
+                                 $"SET Status = CASE " +
+                                 $"WHEN Status <> 2 THEN 3 "+
+                                 $"ELSE Status " +
+                                 $"END " +
+                                 $"WHERE SessionId = @SessionId";
+
+            var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
+
+            await context.Database
+                .ExecuteSqlRawAsync(fourthQuery, sessionIdParameter, cancellationToken);
         }
     }
 }
