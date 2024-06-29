@@ -44,7 +44,8 @@ namespace RSAllies.Venues.Features.Venue
                                 Id = s.Id,
                                 Date = s.Date,
                                 StartTime = s.StartTime,
-                                EndTime = s.EndTime
+                                EndTime = s.EndTime,
+                                Capacity = s.Capacity,
                             }).ToList()
                     })
                     .SingleOrDefaultAsync(cancellationToken);
