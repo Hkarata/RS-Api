@@ -4,7 +4,7 @@ using RSAllies.Jobs.Services;
 
 namespace RSAllies.Jobs.Jobs
 {
-    internal class SessionJob(DatabaseService database, SmtpClient smtpClient)
+    internal class SessionJob(DatabaseService database)
     {
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
@@ -22,35 +22,40 @@ namespace RSAllies.Jobs.Jobs
 
 
             // Send email
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
-            message.To.Add(new MailboxAddress("Manager", venue.VenueAddress));
-            message.Subject = "Session Attendance List";
-            var body = new TextPart("plain")
+            using(var smtpClient = new SmtpClient())
             {
-                Text = $"Dear Manager, please find attached the attendance list for the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
-                       $"on {venue.Date:dd/MM/yyyy}."
-            };
+                smtpClient.Connect("mail.privateemail.com", 465, true);
+                smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
 
-            var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "PDFs", $"{sessionId}.pdf");
-            var attachment = new MimePart("application", "pdf")
-            {
-                Content = new MimeContent(File.OpenRead(pdfPath), ContentEncoding.Default),
-                ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                ContentTransferEncoding = ContentEncoding.Base64,
-                FileName = "SessionAttendance.pdf"
-            };
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
+                message.To.Add(new MailboxAddress("Manager", venue.VenueAddress));
+                message.Subject = "Session Attendance List";
+                var body = new TextPart("plain")
+                {
+                    Text = $"Dear Manager, please find attached the attendance list for the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
+                           $"on {venue.Date:dd/MM/yyyy}."
+                };
 
-            message.Body = new Multipart("mixed")
-            {
-                body,
-                attachment
-            };
+                var pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "PDFs", $"{sessionId}.pdf");
+                var attachment = new MimePart("application", "pdf")
+                {
+                    Content = new MimeContent(File.OpenRead(pdfPath), ContentEncoding.Default),
+                    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                    ContentTransferEncoding = ContentEncoding.Base64,
+                    FileName = "SessionAttendance.pdf"
+                };
 
-            await _semaphore.WaitAsync(cancellationToken);
-            await smtpClient.SendAsync(message, cancellationToken);
-            _semaphore.Release();
+                message.Body = new Multipart("mixed")
+                {
+                    body,
+                    attachment
+                };
+
+                await _semaphore.WaitAsync(cancellationToken);
+                await smtpClient.SendAsync(message, cancellationToken);
+                _semaphore.Release();
+            }
 
         }
     }

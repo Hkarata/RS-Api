@@ -9,7 +9,7 @@ using RSAllies.Shared.Notifications;
 
 namespace RSAllies.Mail.Features
 {
-    internal class BookingHandler(EmailDbContext context, SmtpClient smtpClient) : INotificationHandler<BookingNotification>
+    internal class BookingHandler(EmailDbContext context) : INotificationHandler<BookingNotification>
     {
         public async Task Handle(BookingNotification notification, System.Threading.CancellationToken cancellationToken)
         {
@@ -17,20 +17,27 @@ namespace RSAllies.Mail.Features
 
             if (!string.IsNullOrEmpty(user.Email))
             {
-                var venue = await GetVenueDetailsAsync(notification.SessionId);
-
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
-                message.To.Add(new MailboxAddress(user.Name, user.Email));
-                message.Subject = "Booking Placement";
-                message.Body = new TextPart("plain")
+                using (var smtpClient = new SmtpClient())
                 {
-                    Text = $"Dear {user.Name}, your booking for the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
-                           $"on {venue.Date:dd/MM/yyyy} from {venue.StartTime:HH:mm} to {venue.EndTime:HH:mm} has been booked. " +
-                           $"For any inquiries, please contact 0679844679 or support@roadsafetyallies.me"
-                };
+                    smtpClient.Connect("mail.privateemail.com", 465, true);
+                    smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
 
-                await smtpClient.SendAsync(message, cancellationToken);
+                    var venue = await GetVenueDetailsAsync(notification.SessionId);
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
+                    message.To.Add(new MailboxAddress(user.Name, user.Email));
+                    message.Subject = "Booking Placement";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = $"Dear {user.Name}, your booking for the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
+                               $"on {venue.Date:dd/MM/yyyy} from {venue.StartTime:HH:mm} to {venue.EndTime:HH:mm} has been booked. " +
+                               $"For any inquiries, please contact 0679844679 or support@roadsafetyallies.me"
+                    };
+
+                    await smtpClient.SendAsync(message, cancellationToken);
+                }
+                    
             }
         }
 

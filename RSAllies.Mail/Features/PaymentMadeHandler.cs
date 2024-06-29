@@ -9,7 +9,7 @@ using RSAllies.Shared.Notifications;
 
 namespace RSAllies.Mail.Features
 {
-    internal class PaymentMadeHandler(EmailDbContext context, SmtpClient smtpClient) : INotificationHandler<PaymentMade>
+    internal class PaymentMadeHandler(EmailDbContext context) : INotificationHandler<PaymentMade>
     {
         public async Task Handle(PaymentMade notification, CancellationToken cancellationToken)
         {
@@ -17,20 +17,27 @@ namespace RSAllies.Mail.Features
 
             if (!string.IsNullOrEmpty(user.Email))
             {
-                var englishMessage = $"Dear {user.Name}, your payment with number {notification.PaymentNumber} has been received. Thank you for your payment.";
-                var swahiliMessage = $"Habari {user.Name}, malipo yako yenye namba {notification.PaymentNumber} yamepokelewa. Asante kwa malipo yako.";
-
-
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
-                message.To.Add(new MailboxAddress(user.Name, user.Email));
-                message.Subject = $"Successful Payment for {notification.PaymentNumber}";
-                message.Body = new TextPart("plain")
+                using (var smtpClient = new SmtpClient())
                 {
-                    Text = englishMessage + " " + swahiliMessage
-                };
+                    smtpClient.Connect("mail.privateemail.com", 465, true);
+                    smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
 
-                await smtpClient.SendAsync(message, cancellationToken);
+                    var englishMessage = $"Dear {user.Name}, your payment with number {notification.PaymentNumber} has been received. Thank you for your payment.";
+                    var swahiliMessage = $"Habari {user.Name}, malipo yako yenye namba {notification.PaymentNumber} yamepokelewa. Asante kwa malipo yako.";
+
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("DoNotReply", "donotreply@roadsafetyallies.me"));
+                    message.To.Add(new MailboxAddress(user.Name, user.Email));
+                    message.Subject = $"Successful Payment for {notification.PaymentNumber}";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = englishMessage + " " + swahiliMessage
+                    };
+
+                    await smtpClient.SendAsync(message, cancellationToken);
+                }
+                    
 
             }
         }

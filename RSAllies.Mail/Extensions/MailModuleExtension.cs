@@ -24,15 +24,6 @@ namespace RSAllies.Mail.Extensions
                 options.UseSqlServer(configurationManager.GetConnectionString("AppDbConnection"));
             });
 
-            services.AddSingleton<SmtpClient>(options =>
-            {
-                var smtpClient = new SmtpClient();
-                smtpClient.Connect("mail.privateemail.com", 465, true);
-                smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");
-
-                return smtpClient;
-            });
-
             return services;
         }
     }
