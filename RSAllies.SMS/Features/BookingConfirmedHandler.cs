@@ -48,7 +48,7 @@ namespace RSAllies.SMS.Features
 
             var user = await context.Database
                 .SqlQueryRaw<User>(query, userIdParameter)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
             return user!;
         }
@@ -65,7 +65,7 @@ namespace RSAllies.SMS.Features
 
             var venue = await context.Database
                 .SqlQueryRaw<Venue>(query, sessionIdParameter)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
             return venue!;
         }

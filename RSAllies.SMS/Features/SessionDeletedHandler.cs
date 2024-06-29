@@ -75,7 +75,7 @@ namespace RSAllies.SMS.Features
 
                 var number = await context.Set<string>()
                     .FromSqlRaw(thirdQuery, userIdParameter)
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .SingleOrDefaultAsync(cancellationToken);
 
                 var phoneNumber = "255" + number!.TrimStart('0');
 
@@ -97,7 +97,7 @@ namespace RSAllies.SMS.Features
 
             var venue = await context.Database
                 .SqlQueryRaw<Venue>(query, sessionIdParameter)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
             return venue!;
         }
