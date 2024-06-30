@@ -68,8 +68,8 @@ namespace RSAllies.SMS.Features
             foreach (var UserId in usersID)
             {
                 string thirdQuery = $"SELECT u.Phone AS Phone " +
-                                    $"FROM Users.Users u " +
-                                    $"WHERE u.Id = @UserId";
+                                    $"FROM Users.Accounts a " +
+                                    $"WHERE a.Id = @UserId";
 
                 var userIdParameter = new SqlParameter("@UserId", UserId);
 
