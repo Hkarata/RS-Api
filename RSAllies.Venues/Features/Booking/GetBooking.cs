@@ -50,6 +50,15 @@ namespace RSAllies.Venues.Features.Booking
                         ));
                 }
 
+                // lets check if the booking's session has passed
+                if (booking.BookedAt < DateTime.UtcNow)
+                {
+                    return Result.Failure<BookingDto>(new Error("GetBooking.Expired",
+                        "The specified booking has expired"
+                        ));
+                }
+
+
                 return Result.Success(booking);
 
             }

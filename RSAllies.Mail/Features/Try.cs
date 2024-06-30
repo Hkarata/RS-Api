@@ -30,7 +30,7 @@ namespace RSAllies.Mail.Features
                     await smtpClient.SendAsync(message, cancellationToken);
                 }
 
-                
+
             });
         }
     }

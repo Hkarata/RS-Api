@@ -72,7 +72,7 @@ namespace RSAllies.Jobs.Services
             // cancel all bookings for a specific session whose status is not confirmed
             string fourthQuery = $"UPDATE Venues.Bookings " +
                                  $"SET Status = CASE " +
-                                 $"WHEN Status <> 2 THEN 3 "+
+                                 $"WHEN Status <> 2 THEN 3 " +
                                  $"ELSE Status " +
                                  $"END " +
                                  $"WHERE SessionId = @SessionId";

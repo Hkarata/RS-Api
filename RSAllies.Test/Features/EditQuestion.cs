@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using RSAllies.Shared.HelperTypes;
 using RSAllies.Test.Contracts.Requests;
 using RSAllies.Test.Data;
 using RSAllies.Test.Entities;
-using RSAllies.Test.Extensions;
 using RSAllies.Test.Features;
 
 namespace RSAllies.Test.Features

@@ -22,7 +22,7 @@ namespace RSAllies.Jobs.Jobs
 
 
             // Send email
-            using(var smtpClient = new SmtpClient())
+            using (var smtpClient = new SmtpClient())
             {
                 smtpClient.Connect("mail.privateemail.com", 465, true);
                 smtpClient.Authenticate("donotreply@roadsafetyallies.me", "Hmkmkombe2.");

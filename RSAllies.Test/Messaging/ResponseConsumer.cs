@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Microsoft.Extensions.Logging;
 using RSAllies.Test.Contracts.Requests;
 using RSAllies.Test.Data;
 using RSAllies.Test.Entities;
