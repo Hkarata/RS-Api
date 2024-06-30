@@ -17,14 +17,14 @@ namespace RSAllies.Venues.Features.Booking
 {
     internal class CheckBooking
     {
-        internal class Query : IRequest<Result>
+        internal class Query : IRequest<Result<TimeSpan>>
         {
             public Guid UserId { get; set; }
         }
 
-        internal sealed class Handler(VenueDbContext context) : IRequestHandler<Query, Result>
+        internal sealed class Handler(VenueDbContext context) : IRequestHandler<Query, Result<TimeSpan>>
         {
-            public async Task<Result> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<TimeSpan>> Handle(Query request, CancellationToken cancellationToken)
             {
                 // Check if the user has any latest booking
                 var bookings = await context.Bookings
@@ -36,12 +36,14 @@ namespace RSAllies.Venues.Features.Booking
                 // If the user has a booking and the session has not started
                 if (bookings is not null && bookings.Session!.Date > DateTime.Now)
                 {
-                    return Result.Success();
+                    // lets get the timespan left to the session
+                    var timeSpan = bookings.Session.Date - DateTime.Now;
+                    return timeSpan;
                 }
 
                 // If the user has no bookings, return a failure result
 
-                return Result.Failure(new Error("CheckBooking.NoBooking", "The user has no bookings"));
+                return Result.Failure<TimeSpan>(new Error("CheckBooking.NoBooking", "The user has no bookings"));
             }
         }
 
@@ -58,7 +60,7 @@ public class CheckBookingEndPoint : ICarterModule
             var result = await sender.Send(request);
             return result.IsSuccess ? Results.Ok(result) : Results.Ok(result.Error);
         })
-            .Produces<Result>()
+            .Produces<Result<TimeSpan>>()
             .WithTags("Checks");
     }
 }
