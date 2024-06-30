@@ -44,8 +44,8 @@ namespace RSAllies.Mail.Features
         public async Task<User> GetUserDetailsAsync(Guid userId)
         {
             var query = $"SELECT CONCAT(u.FirstName, ' ', u.MiddleName, ' ', u.LastName) AS Name, a.Email AS Email " +
-                        $"FROM Users.Users u" +
-                        $"Join Users.Accounts a ON u.Id = a.Id" +
+                        $"FROM Users.Users u "+
+                        $"Join Users.Accounts a ON u.Id = a.Id "+
                         $"WHERE u.Id = @UserId";
 
             var userIdParameter = new SqlParameter("@UserId", userId);
