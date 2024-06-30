@@ -55,7 +55,7 @@ namespace RSAllies.Test.Features
 }
 
 
-public class EditQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : ICarterModule
+public class EditQuestionEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -70,8 +70,6 @@ public class EditQuestionEndPoint(ILogger<CreateQuestionEndPoint> logger) : ICar
             };
 
             var result = await sender.Send(request);
-
-            logger.LogQuestionEdited(question);
 
             return result.IsFailure ? Results.Ok(result.Error) : Results.Ok(result);
 
