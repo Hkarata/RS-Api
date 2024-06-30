@@ -44,7 +44,7 @@ namespace RSAllies.SMS.Features
 
             var user = await context.Database
                 .SqlQueryRaw<User>(query, userIdParameter)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
 
             return user!;
         }
