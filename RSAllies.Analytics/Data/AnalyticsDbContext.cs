@@ -34,7 +34,7 @@ namespace RSAllies.Analytics.Data
         public virtual DbSet<TestGenderDto> TestGenderCounts { get; set; }
         public virtual DbSet<TestRetakeAgeGroupDto> TestRetakeAgeGroupCounts { get; set; }
 
-
+        public virtual DbSet<CaseDto> Cases { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -67,6 +67,7 @@ namespace RSAllies.Analytics.Data
             modelBuilder.Entity<TestRetakeDto>().HasNoKey();
             modelBuilder.Entity<TestGenderDto>().HasNoKey();
             modelBuilder.Entity<TestRetakeAgeGroupDto>().HasNoKey();
+            modelBuilder.Entity<CaseDto>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }

@@ -587,5 +587,12 @@
                 END
 
         ";
+
+        public static string CaseAnalysis = @"
+            SELECT 
+                COALESCE(SUM(CASE WHEN IsClosed = 1 THEN 1 ELSE 0 END), 0) AS ClosedCases,
+                COALESCE(SUM(CASE WHEN IsClosed = 0 THEN 1 ELSE 0 END), 0) AS OpenCases
+            FROM Users.SupportCases
+        ";
     }
 }
