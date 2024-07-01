@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RSAllies.Users.Contracts.Requests
+﻿namespace RSAllies.Users.Contracts.Requests
 {
     public record UpdatePasswordDto
     {

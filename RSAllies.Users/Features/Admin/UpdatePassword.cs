@@ -8,11 +8,6 @@ using RSAllies.Shared.HelperTypes;
 using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Data;
 using RSAllies.Users.Features.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RSAllies.Users.Features.Admin
 {
@@ -51,7 +46,7 @@ public class UpdatePasswordEndPoint : ICarterModule
     {
         app.MapPost("/api/admin/update-password", async (UpdatePasswordDto update, ISender sender) =>
         {
-            var request =  new UpdatePassword.Command
+            var request = new UpdatePassword.Command
             {
                 AdminId = update.UserId,
                 Password = update.Password
