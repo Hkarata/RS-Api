@@ -36,10 +36,18 @@ namespace RSAllies.Users.Features.Admin
                     return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "invalid account"));
                 }
 
-                if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+                try
                 {
-                    return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "invalid password"));
+                    if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+                    {
+                        return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "invalid password"));
+                    }
                 }
+                catch (Exception)
+                {
+                    return Result.Failure<AdminDto>(new Error("AuthenticateAdmin.Failed", "An error occurred while verifying the password"));
+                }
+
 
                 var admin = new AdminDto
                 {

@@ -36,11 +36,21 @@ internal abstract class AuthenticateUser
                     new Error("AuthenticateUser.NonExistentUser", "The specified user does not exist"));
             }
 
-            if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+            try
+            {
+                if (!PasswordService.VerifyHashedPassword(query.Password, request.Password))
+                {
+                    return Result.Failure<UserDto>(
+                        new Error("AuthenticateUser.InvalidPassword", "The specified password is incorrect"));
+                }
+            }
+            catch (Exception)
             {
                 return Result.Failure<UserDto>(
-                    new Error("AuthenticateUser.InvalidPassword", "The specified password is incorrect"));
+                        new Error("AuthenticateUser.InvalidPassword", "The specified password is incorrect"));
             }
+
+
 
             var account = new UserDto
             {
