@@ -8,6 +8,7 @@ using RSAllies.Shared.HelperTypes;
 using RSAllies.Users.Contracts.Requests;
 using RSAllies.Users.Data;
 using RSAllies.Users.Features.Admin;
+using RSAllies.Users.Services;
 
 namespace RSAllies.Users.Features.Admin
 {
@@ -32,7 +33,7 @@ namespace RSAllies.Users.Features.Admin
                     return Result.Failure(new Error("UpdatePassword.NotFound", "Admin not found"));
                 }
 
-                admin.Password = request.Password;
+                admin.Password = PasswordService.HashPassword(request.Password);
                 await context.SaveChangesAsync(cancellationToken);
                 return Result.Success();
             }
