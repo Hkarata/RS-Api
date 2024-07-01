@@ -46,7 +46,7 @@ public class ActivateAdminEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPatch("/api/admin/activate/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("/api/admin/activate/{id}", async (Guid id, ISender sender) =>
         {
             var request = new ActivateAdmin.Command
             {

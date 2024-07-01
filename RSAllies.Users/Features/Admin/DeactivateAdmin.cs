@@ -46,9 +46,9 @@ public class DeactivateAdminEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPatch("/api/admin/deactivate/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("/api/admin/deactivate/{id}", async (Guid id, ISender sender) =>
         {
-            var request = new ActivateAdmin.Command
+            var request = new DeactivateAdmin.Command
             {
                 Id = id
             };
