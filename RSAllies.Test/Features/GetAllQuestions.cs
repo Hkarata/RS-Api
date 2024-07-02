@@ -28,7 +28,7 @@ namespace RSAllies.Test.Features
                     {
                         Scenario = q.Scenario!,
                         ImageUrl = q.ImageUrl!,
-                        Question = q.QuestionText,
+                        QuestionText = q.QuestionText,
                         IsEnglish = q.IsEnglish,
                         Choices = q.Choices.Select(c => new AllChoiceDto
                         {
