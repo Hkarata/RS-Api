@@ -57,7 +57,7 @@ public class GetQuestionEndPoint : ICarterModule
         {
             var request = new GetQuestion.Query { Id = questionId };
             var result = await sender.Send(request);
-            return result.IsSuccess ? Results.Ok(result.Value) : Results.Ok(result.Error);
+            return result.IsSuccess ? Results.Ok(result) : Results.Ok(result.Error);
         });
     }
 }
