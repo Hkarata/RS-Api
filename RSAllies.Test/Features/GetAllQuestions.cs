@@ -26,6 +26,7 @@ namespace RSAllies.Test.Features
                     .Where(q => !q.IsDeleted)
                     .Select(q => new AllQuestionDto
                     {
+                        Id = q.Id,
                         Scenario = q.Scenario!,
                         ImageUrl = q.ImageUrl!,
                         QuestionText = q.QuestionText,
