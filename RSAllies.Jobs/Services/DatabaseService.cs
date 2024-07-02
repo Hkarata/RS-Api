@@ -9,7 +9,7 @@ namespace RSAllies.Jobs.Services
     {
         public async Task<List<string>> GetUsersID(Guid sessionId)
         {
-            var firstQuery = $"SELECT b.UserId AS UserId " +
+            var firstQuery = $"SELECT CONVERT(nvarchar(36), b.UserId) AS UserId " +
                              $"FROM Venues.Bookings b " +
                              $"WHERE b.SessionId = @SessionId AND b.Status = 2 AND b.IsDeleted = 0";
 
@@ -19,12 +19,17 @@ namespace RSAllies.Jobs.Services
                 .SqlQueryRaw<string>(firstQuery, sessionIdParameter)
                 .ToListAsync();
 
+            if (userIds.Count == 0)
+            {
+                return new List<string>();
+            }
+
             var users = userIds;
 
             return users;
         }
 
-        public async Task<Venue> GetVenueDetails(Guid sessionId, CancellationToken cancellationToken)
+        public async Task<Venue> GetVenueDetails(Guid sessionId)
         {
             string secondQuery = $"SELECT s.Date AS Date, s.Capacity AS Capacity, v.Name AS VenueName, v.Address AS VenueAddress, d.Name AS District, r.Name AS Region " +
                                  $"FROM Venues.Sessions s " +
@@ -37,29 +42,34 @@ namespace RSAllies.Jobs.Services
 
             var details = await context.Database
                 .SqlQueryRaw<Venue>(secondQuery, sessionIdParameter)
-                .FirstOrDefaultAsync(cancellationToken);
+                .FirstOrDefaultAsync();
 
             return details!;
         }
 
-        public async Task<List<User>> GetUserDetails(Guid sessionId, CancellationToken cancellationToken)
+        public async Task<List<User>> GetUserDetails(Guid sessionId)
         {
             var usersID = await GetUsersID(sessionId);
+
+            if (usersID.Count == 0)
+            {
+                return new List<User>();
+            }
 
             var users = new List<User>();
 
             foreach (var UserId in usersID)
             {
-                string thirdQuery = $"SELECT u.FirstName, u.MiddleName, u.LastName, u.Identification, g.GenderType as Gender" +
+                string thirdQuery = $"SELECT u.FirstName, u.MiddleName, u.LastName, u.Identification, g.GenderType as Gender " +
                                     $"FROM Users.Users u " +
                                     $"JOIN Users.Genders g ON u.GenderId = g.Id " +
                                     $"WHERE u.Id = @UserId";
 
-                var userIdParameter = new SqlParameter("@UserId", UserId);
+                var userIdParameter = new SqlParameter("@UserId", Guid.Parse(UserId));
 
                 var user = await context.Database
                     .SqlQueryRaw<User>(thirdQuery, userIdParameter)
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .FirstOrDefaultAsync();
 
                 users.Add(user!);
             }
@@ -67,7 +77,7 @@ namespace RSAllies.Jobs.Services
             return users;
         }
 
-        public async Task CancelUnconfirmedBookings(Guid sessionId, CancellationToken cancellationToken)
+        public async Task CancelUnconfirmedBookings(Guid sessionId)
         {
             // cancel all bookings for a specific session whose status is not confirmed
             string fourthQuery = $"UPDATE Venues.Bookings " +
@@ -80,7 +90,7 @@ namespace RSAllies.Jobs.Services
             var sessionIdParameter = new SqlParameter("@SessionId", sessionId);
 
             await context.Database
-                .ExecuteSqlRawAsync(fourthQuery, sessionIdParameter, cancellationToken);
+                .ExecuteSqlRawAsync(fourthQuery, sessionIdParameter);
         }
     }
 }
