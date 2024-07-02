@@ -18,6 +18,7 @@ namespace RSAllies.Test.Features
         {
             public Guid QuestionId { get; set; }
             public string Question { get; set; } = string.Empty;
+            public string ImageUrl { get; set; } = string.Empty;
             public bool IsEnglish { get; set; }
             public required List<CreateChoiceDto> Choices { get; set; }
         }
@@ -38,6 +39,8 @@ namespace RSAllies.Test.Features
 
                 question.QuestionText = request.Question;
                 question.IsEnglish = request.IsEnglish;
+                question.ImageUrl = request.ImageUrl;
+
                 question.Choices = request.Choices.Select(c => new Choice
                 {
                     ChoiceText = c.ChoiceText,
@@ -72,6 +75,7 @@ public class EditQuestionEndPoint : ICarterModule
             {
                 QuestionId = questionId,
                 Question = question.Question,
+                ImageUrl = question.ImageUrl!,
                 IsEnglish = question.IsEnglish,
                 Choices = question.Choices
             };
