@@ -44,6 +44,15 @@ namespace RSAllies.Test.Features
                     IsCorrect = c.IsAnswer
                 }).ToList();
 
+                var answer = await context.Answers
+                    .Where(a => a.QuestionId == question.Id)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                if (answer is not null)
+                {
+                    answer.ChoiceId = question.Choices.Single(c => c.IsCorrect).Id;
+                }
+
                 await context.SaveChangesAsync(cancellationToken);
 
                 return Result.Success();
