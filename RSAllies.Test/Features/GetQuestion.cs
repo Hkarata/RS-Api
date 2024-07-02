@@ -13,33 +13,35 @@ namespace RSAllies.Test.Features
 {
     internal class GetQuestion
     {
-        internal class Query : IRequest<Result<QuestionDto>>
+        internal class Query : IRequest<Result<AllQuestionDto>>
         {
             public Guid Id { get; set; }
         }
 
-        internal sealed class Handler(TestDbContext context) : IRequestHandler<Query, Result<QuestionDto>>
+        internal sealed class Handler(TestDbContext context) : IRequestHandler<Query, Result<AllQuestionDto>>
         {
-            public async Task<Result<QuestionDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<AllQuestionDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var question = await context.Questions
                     .Include(q => q.Choices)
                     .Where(q => q.Id == request.Id && !q.IsDeleted)
-                    .Select(qn => new QuestionDto
+                    .Select(qn => new AllQuestionDto
                     {
+                        Id = qn.Id,
                         Scenario = qn.Scenario!,
                         ImageUrl = qn.ImageUrl!,
-                        Question = qn.QuestionText,
-                        Choices = qn.Choices.Select(c => new ChoiceDto
+                        QuestionText = qn.QuestionText,
+                        Choices = qn.Choices.Select(c => new AllChoiceDto
                         {
-                            ChoiceText = c.ChoiceText
+                            ChoiceText = c.ChoiceText,
+                            IsCorrect = c.IsCorrect
                         }).ToList()
                     })
                     .SingleOrDefaultAsync(cancellationToken);
 
                 if (question is null)
                 {
-                    return Result.Failure<QuestionDto>(new Error("GetQuestion.NonExistent", "The specified question does not exist"));
+                    return Result.Failure<AllQuestionDto>(new Error("GetQuestion.NonExistent", "The specified question does not exist"));
                 }
 
                 return Result.Success(question);
