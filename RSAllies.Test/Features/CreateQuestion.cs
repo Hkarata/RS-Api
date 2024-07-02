@@ -28,18 +28,37 @@ namespace RSAllies.Test.Features
             {
                 var question = new Question
                 {
+                    Id = Guid.NewGuid(),
                     Scenario = request.Scenario,
                     ImageUrl = request.ImageUrl,
                     QuestionText = request.Question,
                     Choices = request.Choices.Select(choice => new Choice
                     {
+                        Id = Guid.NewGuid(),
                         ChoiceText = choice.ChoiceText,
                         IsCorrect = choice.IsAnswer
                     }).ToList(),
                     IsEnglish = request.IsEnglish
                 };
 
+                var answer = question.Choices
+                    .Where(c => c.IsCorrect)
+                    .Select(a => new Answer
+                    {
+                        Id = Guid.NewGuid(),
+                        ChoiceId = a.Id,
+                        QuestionId = question.Id
+                    })
+                    .SingleOrDefault();
+
+                if (answer == null)
+                {
+                    return Result.Failure(Error.ConditionNotMet);
+                }
+
                 context.Questions.Add(question);
+
+                context.Answers.Add(answer);
 
                 await context.SaveChangesAsync(cancellationToken);
 
