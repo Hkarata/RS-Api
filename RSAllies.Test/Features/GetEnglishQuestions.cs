@@ -27,11 +27,11 @@ namespace RSAllies.Test.Features
                     .Include(q => q.Choices)
                     .Select(q => new QuestionDto
                     {
-						Id = q.Id,
-						Scenario = q.Scenario!,
+                        Id = q.Id,
+                        Scenario = q.Scenario!,
                         ImageUrl = q.ImageUrl!,
                         Question = q.QuestionText,
-                        Choices = q.Choices.Select(c => new ChoiceDto {Id = c.Id, ChoiceText = c.ChoiceText }).ToList()
+                        Choices = q.Choices.Select(c => new ChoiceDto { Id = c.Id, ChoiceText = c.ChoiceText }).ToList()
                     })
                     .ToListAsync(cancellationToken);
 

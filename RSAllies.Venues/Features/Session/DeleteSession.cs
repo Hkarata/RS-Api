@@ -18,7 +18,7 @@ namespace RSAllies.Venues.Features.Session
             public Guid SessionId { get; set; }
         }
 
-        internal sealed class Handler(VenueDbContext context) : IRequestHandler<Command, Result>
+        internal sealed class Handler(VenueDbContext context, IMediator mediator) : IRequestHandler<Command, Result>
         {
             public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
             {
@@ -35,7 +35,11 @@ namespace RSAllies.Venues.Features.Session
                 session.IsDeleted = true;
                 session.Bookings!.ForEach(b => b.IsDeleted = true);
 
-                //await mediator.Publish(new SessionDeleted(session.Id), cancellationToken);
+                await mediator.Publish(new SessionDeleted(session.Id), cancellationToken);
+
+                var userId = session.Bookings.Select(b => b.UserId).ToList();
+
+                await mediator.Publish(new GetPhoneNumbers(session.Id, userId), cancellationToken);
 
                 await context.SaveChangesAsync();
 
