@@ -16,6 +16,11 @@ namespace RSAllies.SMS.Features
             var venue = await GetVenueDetailsAsync(notification.SessionId);
             var phoneNumbers = await GetPhoneNumbers(notification.SessionId, cancellationToken);
 
+            if (phoneNumbers.Count == 0)
+            {
+                return;
+            }
+
             var message = $"Dear user, the session at {venue.VenueName} in {venue.District}, {venue.Region} " +
                           $"on {venue.Date:dd/MM/yyyy} from {venue.StartTime:HH:mm} to {venue.EndTime:HH:mm} has been cancelled. " +
                           $"For any inquiries, please contact 0679844679 or support@roadsafetyallies.me";
@@ -44,7 +49,7 @@ namespace RSAllies.SMS.Features
 
         public async Task<List<string>> GetUsersID(Guid sessionId)
         {
-            var firstQuery = $"SELECT b.UserId AS UserId " +
+            var firstQuery = $"SELECT CONVERT(nvarchar(36), b.UserId) AS UserId " +
                              $"FROM Venues.Bookings b " +
                              $"WHERE b.SessionId = @SessionId AND b.Status = 2 AND b.IsDeleted = 0";
 
@@ -53,6 +58,11 @@ namespace RSAllies.SMS.Features
             List<string> userIds = await context.Database
                 .SqlQueryRaw<string>(firstQuery, sessionIdParameter)
                 .ToListAsync();
+
+            if (userIds.Count == 0)
+            {
+                return new List<string>();
+            }
 
             var users = userIds;
 
@@ -63,19 +73,24 @@ namespace RSAllies.SMS.Features
         {
             var usersID = await GetUsersID(sessionId);
 
+            if (usersID.Count == 0)
+            {
+                return new List<string>();
+            }
+
             var phoneNumbers = new List<string>();
 
             foreach (var UserId in usersID)
             {
-                string thirdQuery = $"SELECT u.Phone AS Phone " +
+                string thirdQuery = $"SELECT a.Phone AS Phone " +
                                     $"FROM Users.Accounts a " +
                                     $"WHERE a.Id = @UserId";
 
-                var userIdParameter = new SqlParameter("@UserId", UserId);
+                var userIdParameter = new SqlParameter("@UserId", Guid.Parse(UserId));
 
-                var number = await context.Set<string>()
-                    .FromSqlRaw(thirdQuery, userIdParameter)
-                    .FirstOrDefaultAsync(cancellationToken);
+                var number = await context.Database
+                    .SqlQueryRaw<string>(thirdQuery, userIdParameter)
+                    .SingleOrDefaultAsync(cancellationToken);
 
                 var phoneNumber = "255" + number!.TrimStart('0');
 
