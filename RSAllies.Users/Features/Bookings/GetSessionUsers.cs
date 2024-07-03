@@ -23,7 +23,7 @@ namespace RSAllies.Users.Features.Bookings
         {
             public async Task<Result<List<UserData>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var query = $"SELECT u.Id, u.FirstName , u.MiddleName, u.LastName, a.Phone, a.Email " +
+                var query = $"SELECT DISTINCT u.Id, u.FirstName , u.MiddleName, u.LastName, a.Phone, a.Email " +
                             $"FROM [Users].[Users] u " +
                             $"INNER JOIN [Users].[Accounts] a ON u.Id = a.Id " +
                             $"INNER JOIN [Venues].[Bookings] b ON u.Id = b.UserId " +
