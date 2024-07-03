@@ -17,6 +17,7 @@ namespace RSAllies.Test.Features
         internal class Query : IRequest<Result>
         {
             public Guid QuestionId { get; set; }
+            public string Scenario { get; set; } = string.Empty;
             public string Question { get; set; } = string.Empty;
             public string ImageUrl { get; set; } = string.Empty;
             public bool IsEnglish { get; set; }
@@ -37,6 +38,7 @@ namespace RSAllies.Test.Features
                     return Result.Failure(new Error("EditQuestion.NonExistent", "The specified question does not exist"));
                 }
 
+                question.Scenario = request.Scenario;
                 question.QuestionText = request.Question;
                 question.IsEnglish = request.IsEnglish;
                 question.ImageUrl = request.ImageUrl;
@@ -74,6 +76,7 @@ public class EditQuestionEndPoint : ICarterModule
             var request = new EditQuestion.Query
             {
                 QuestionId = questionId,
+                Scenario = question.Scenario!,
                 Question = question.Question,
                 ImageUrl = question.ImageUrl!,
                 IsEnglish = question.IsEnglish,
