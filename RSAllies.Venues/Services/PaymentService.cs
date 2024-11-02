@@ -1,7 +1,7 @@
-﻿using RSAllies.Shared.HelperTypes;
+﻿using System.Security.Cryptography;
+using RSAllies.Shared.HelperTypes;
 using RSAllies.Venues.Data;
 using RSAllies.Venues.Entities;
-using System.Security.Cryptography;
 
 namespace RSAllies.Venues.Services
 {

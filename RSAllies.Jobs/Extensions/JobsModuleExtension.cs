@@ -1,11 +1,11 @@
-﻿using Hangfire;
+﻿using System.Reflection;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSAllies.Jobs.Data;
 using RSAllies.Jobs.Jobs;
 using RSAllies.Jobs.Services;
-using System.Reflection;
 
 namespace RSAllies.Jobs.Extensions
 {

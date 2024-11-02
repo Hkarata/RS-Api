@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Net.Http.Headers;
+using System.Text;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RSAllies.SMS.Contracts.Requests;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace RSAllies.SMS.Services;
 

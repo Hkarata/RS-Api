@@ -1,5 +1,5 @@
-﻿using RSAllies.Shared.DataTypes;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using RSAllies.Shared.DataTypes;
 
 namespace RSAllies.Venues.Entities
 {

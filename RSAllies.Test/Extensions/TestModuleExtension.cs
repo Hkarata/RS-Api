@@ -1,10 +1,10 @@
-﻿using MassTransit;
+﻿using System.Reflection;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSAllies.Test.Data;
 using RSAllies.Test.Messaging;
-using System.Reflection;
 
 namespace RSAllies.Test.Extensions
 {

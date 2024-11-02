@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSAllies.SMS.Data;
 using RSAllies.SMS.Services;
-using System.Reflection;
 
 namespace RSAllies.SMS.Extensions;
 

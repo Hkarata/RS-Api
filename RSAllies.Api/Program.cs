@@ -1,16 +1,16 @@
+using System.Reflection;
 using Carter;
 using Hangfire;
 using Microsoft.Extensions.Compliance.Classification;
 using Microsoft.Extensions.Compliance.Redaction;
 using RSAllies.Analytics.Extension;
 using RSAllies.Jobs.Extensions;
-using RSAllies.Mail.Extensions;
 using RSAllies.Shared.Extensions;
 using RSAllies.SMS.Extensions;
 using RSAllies.Test.Extensions;
 using RSAllies.Users.Extensions;
 using RSAllies.Venues.Extensions;
-using System.Reflection;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,7 @@ builder.Services.AddVenuesModuleServices(builder.Configuration, mediatRAssemblie
 
 builder.Services.AddTestModuleServices(builder.Configuration, mediatRAssemblies); // Test Module Registration
 
-builder.Services.AddMailModuleServices(builder.Configuration, mediatRAssemblies); // Email Module Registration
+//builder.Services.AddMailModuleServices(builder.Configuration, mediatRAssemblies); // Email Module Registration
 
 builder.Services.AddSmsModuleServices(builder.Configuration, mediatRAssemblies); // Sms Module Registration
 
@@ -60,11 +60,7 @@ builder.Services.AddRedaction(redact =>
 
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 
 builder.Services.AddCors(options =>
 {
@@ -78,15 +74,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+app.MapOpenApi();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.MapScalarApiReference(options =>
+{
+    options.WithTitle("Driver-centric Theoretical Testing System Api.");
+    options.WithTheme(ScalarTheme.Mars);
+});
 
 app.UseHttpsRedirection();
 

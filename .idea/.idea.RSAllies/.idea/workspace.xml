@@ -4,12 +4,23 @@
     <projectFile profileName="IIS Express">RSAllies.Api/RSAllies.Api.csproj</projectFile>
     <projectFile profileName="http">RSAllies.Api/RSAllies.Api.csproj</projectFile>
     <projectFile profileName="https">RSAllies.Api/RSAllies.Api.csproj</projectFile>
+    <projectFile pubXmlPath="RSAllies.Api/Properties/PublishProfiles/FolderProfile.pubxml">RSAllies.Api/RSAllies.Api.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ad45373-3e22-43ac-bcff-3da744b882ad" name="Changes" comment="" />
+    <list default="true" id="7ad45373-3e22-43ac-bcff-3da744b882ad" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/RSAllies.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/dataSources/82c5565b-0a80-4fd0-bc69-c48df78aff1f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/dataSources/82c5565b-0a80-4fd0-bc69-c48df78aff1f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSAllies/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RSAllies.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RSAllies.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RSAllies.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/RSAllies.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RSAllies.Api/RSAllies.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/RSAllies.Api/RSAllies.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RSAllies.Api/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/RSAllies.Api/appsettings.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +28,9 @@
   </component>
   <component name="EndpointsView">
     <option name="showSidePanel" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/Azure/azure-sdk-for-net/890897e581fde739698429ea6bc0d6b1abeddaa6/sdk/communication/Azure.Communication.Email/src/EmailSendOperation.cs" root0="SKIP_HIGHLIGHTING" />
@@ -31,32 +45,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.RSAllies.Api: https.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.RSAllies.Api: https.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlserver.localdb&quot;,
-      &quot;sqlserver&quot;
-    ],
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\heris\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\heris\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\heris\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver.localdb",
+      "sqlserver"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.RSAllies.Api: https">
+    <configuration name="RSAllies.Api: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish configuration="Release" platform="Any CPU" publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/RSAllies.Api/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="8528300028907832958" uuid_low="-8063451016564676617" />
+      <method v="2" />
+    </configuration>
     <configuration name="RSAllies.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/RSAllies.Api/RSAllies.Api.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -130,6 +144,7 @@
       <workItem from="1717522205825" duration="10239000" />
       <workItem from="1717540609452" duration="3563000" />
       <workItem from="1717544879584" duration="909000" />
+      <workItem from="1730373117675" duration="612000" />
     </task>
     <servers />
   </component>

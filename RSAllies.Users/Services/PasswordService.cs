@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace RSAllies.Users.Services;
 
